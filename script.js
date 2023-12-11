@@ -20,6 +20,7 @@ function renderPokemonInfo() {
     document.getElementById('pokemon-height').innerHTML = 'Height: ' + currentPokemon['height'] / 10 + ' m';
     document.getElementById('pokemon-weight').innerHTML = 'Weight: ' + currentPokemon['weight'] / 10 + ' kg';
 
+    // Display Abilities directly from API using a for loop
     let abilitiesHTML = 'Abilities: ';
     for (let i = 0; i < currentPokemon['abilities'].length; i++) {
         abilitiesHTML += currentPokemon['abilities'][i]['ability']['name'];
@@ -35,8 +36,16 @@ function renderPokemonInfo() {
     document.getElementById('pokemon-defense').innerHTML = 'Defense: ' + currentPokemon['stats'][2]['base_stat'];
     document.getElementById('pokemon-sp-atk').innerHTML = 'Sp. Atk: ' + currentPokemon['stats'][3]['base_stat'];
     document.getElementById('pokemon-sp-def').innerHTML = 'Sp. Def: ' + currentPokemon['stats'][4]['base_stat'];
+    document.getElementById('pokemon-speed').innerHTML = 'Speed: ' + currentPokemon['stats'][5]['base_stat'];
 
-    // Display Abilities directly from API using a for loop
+    // Display Moves directly from API using a for loop
+    let movesHTML = 'Moves: <ul>';
+    for (let i = 0; i < currentPokemon['moves'].length; i++) {
+        movesHTML += '<li>' + currentPokemon['moves'][i]['move']['name'] + '</li>';
+    }
+    movesHTML += '</ul>';
+    document.getElementById('pokemon-moves').innerHTML = movesHTML;
 }
+
 
 
