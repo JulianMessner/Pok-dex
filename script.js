@@ -8,6 +8,7 @@ async function loadPokemon() {
     console.log('Loaded pokemon', currentPokemon)
 
     renderPokemonInfo();
+    renderPokemonInfoOverview();
 }
 
 // JavaScript
@@ -130,3 +131,30 @@ function underlineClickedHeader(headerId) {
 }
 
   
+function renderPokemonInfoOverview() {
+    renderNameAndTypesOverview();
+    renderImageOverview();
+}
+
+function renderNameAndTypesOverview() {
+    const overviewName = document.getElementById('overview-name');
+    const overviewTypes = document.getElementById('overview-types');
+
+    const pokemonName = currentPokemon['name'];
+    const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
+    let typesHTML = '';
+    for (let i = 0; i < currentPokemon['types'].length; i++) {
+        typesHTML += currentPokemon['types'][i]['type']['name'];
+        if (i < currentPokemon['types'].length - 1) {
+            typesHTML += ', ';
+        }
+    }
+
+    overviewName.textContent = capitalizedPokemonName;
+    overviewTypes.textContent = typesHTML;
+}
+
+function renderImageOverview() {
+    const overviewImage = document.getElementById('overview-image');
+    overviewImage.src = currentPokemon['sprites']['front_default'];
+}

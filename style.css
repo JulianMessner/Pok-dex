@@ -130,3 +130,27 @@ h2:hover {
     width: 50%;
 }
 
+#overview-card {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.pokemon-info-overview {
+    text-align: left;
+}
+
+.pokemon-image-overview {
+    text-align: center;
+}
+
+#overview-image {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+}
+
