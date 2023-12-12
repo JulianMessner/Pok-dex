@@ -60,3 +60,35 @@ function renderPokemonInfo() {
     movesHTML += '</ul>';
     document.getElementById('pokemon-moves').innerHTML = movesHTML;
 }
+
+function setActiveSection(sectionId, headerId) {
+    // Alle Abschnitte verbergen
+    const allSections = document.querySelectorAll('.about-section, .base-stats-section, .moves-section');
+    allSections.forEach(section => {
+        section.classList.add('d-none');
+        section.classList.remove('active');
+    });
+
+    // Den gewünschten Abschnitt anzeigen
+    const selectedSection = document.querySelector(`.${sectionId}`);
+    selectedSection.classList.remove('d-none');
+    selectedSection.classList.add('active');
+
+    // Unterstreiche das angeklickte h2-Element
+    underlineClickedHeader(headerId);
+}
+
+
+function underlineClickedHeader(headerId) {
+    // Alle h2-Elemente
+    const allHeaders = document.querySelectorAll('h2');
+    allHeaders.forEach(header => {
+        header.classList.remove('text-decoration-underline');
+    });
+
+    // Das angeklickte h2-Element unterstreichen
+    const clickedHeader = document.getElementById(headerId);
+    clickedHeader.classList.add('text-decoration-underline');
+}
+
+  
