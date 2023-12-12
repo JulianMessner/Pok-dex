@@ -44,20 +44,33 @@ function renderPokemonInfo() {
     }
     document.getElementById('pokemon-abilities').innerHTML = abilitiesHTML;
 
-    // Display Base Stats directly from API
-    document.getElementById('pokemon-hp').innerHTML = 'HP: ' + currentPokemon['stats'][0]['base_stat'];
-    document.getElementById('pokemon-attack').innerHTML = 'Attack: ' + currentPokemon['stats'][1]['base_stat'];
-    document.getElementById('pokemon-defense').innerHTML = 'Defense: ' + currentPokemon['stats'][2]['base_stat'];
-    document.getElementById('pokemon-sp-atk').innerHTML = 'Sp. Atk: ' + currentPokemon['stats'][3]['base_stat'];
-    document.getElementById('pokemon-sp-def').innerHTML = 'Sp. Def: ' + currentPokemon['stats'][4]['base_stat'];
-    document.getElementById('pokemon-speed').innerHTML = 'Speed: ' + currentPokemon['stats'][5]['base_stat'];
+    // Display Base Stats directly from API    // ... (unveränderte Teile)
+    
+        // Display Base Stats directly from API
+        let baseStatsHTML = '';
+        const statNames = ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed'];
+    
+        for (let i = 0; i < currentPokemon['stats'].length; i++) {
+            const statValue = currentPokemon['stats'][i]['base_stat'];
+    
+            // Fügen Sie das div mit dem Stat-Namen und dem Wert zum HTML-String hinzu
+            baseStatsHTML += `
+                <div class="stat-container">
+                    <div class="stat-name">${statNames[i]}</div>
+                    <div class="stat-value">${statValue}</div>
+                </div>
+            `;
+        }
+    
+        // Fügen Sie den HTML-String zum Container hinzu
+        document.getElementById('pokemon-base-stats').innerHTML += baseStatsHTML;
 
     // Display Moves directly from API using a for loop
-    let movesHTML = 'Moves: <ul>';
+    let movesHTML = '<div id="pokemon-moves-container">'; // Änderung: Verwenden Sie ein <div> als Container
     for (let i = 0; i < currentPokemon['moves'].length; i++) {
-        movesHTML += '<li>' + currentPokemon['moves'][i]['move']['name'] + '</li>';
+        movesHTML += '<p>' + currentPokemon['moves'][i]['move']['name'] + '</p>'; // Änderung: Verwenden Sie <p> statt <li>
     }
-    movesHTML += '</ul>';
+    movesHTML += '</div>'; // Änderung: Schließen Sie den Container
     document.getElementById('pokemon-moves').innerHTML = movesHTML;
 }
 
