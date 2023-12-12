@@ -103,7 +103,30 @@ h2:hover {
     padding: 8px;
 }
 
+.info-item{
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-label{
+    width: 100px;
+}
+
+.info-value{
+    width: 50%;
+}
+
 .stat-container{
     display: flex;
     justify-content: space-between;
 }
+
+.stat-name{
+    width: 100px;
+    margin-right: 50%;
+} 
+
+.stat-value{
+    width: 50%;
+}
+

@@ -11,13 +11,16 @@ async function loadPokemon() {
 }
 
 // JavaScript
+// JavaScript
 function renderPokemonInfo() {
+    renderBasicInfo();
+    renderBaseStats();
+    renderMoves();
+}
+
+function renderBasicInfo() {
     const pokemonName = currentPokemon['name'];
     const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
-    document.getElementById('pokemon-name').innerHTML = capitalizedPokemonName;
-    document.getElementById('pokemon-image').src = currentPokemon['sprites']['front_default'];
-
-    // Display Types directly from API
     let typesHTML = '';
     for (let i = 0; i < currentPokemon['types'].length; i++) {
         typesHTML += currentPokemon['types'][i]['type']['name'];
@@ -26,53 +29,75 @@ function renderPokemonInfo() {
         }
     }
     document.getElementById('pokemon-type').innerHTML = typesHTML;
+    document.getElementById('pokemon-name').innerHTML = capitalizedPokemonName;
+    document.getElementById('pokemon-image').src = currentPokemon['sprites']['front_default'];
 
-    // Display About-section directly from API
-    const speciesName = currentPokemon['species']['name'];
-    const capitalizedSpeciesName = speciesName.charAt(0).toUpperCase() + speciesName.slice(1);
+    // Display Basic Info directly from API
+    const basicInfoContainer = document.getElementById('pokemon-basic-info');
 
-    document.getElementById('pokemon-species').innerHTML = 'Species: ' + capitalizedSpeciesName;    document.getElementById('pokemon-height').innerHTML = 'Height: ' + currentPokemon['height'] / 10 + ' m';
-    document.getElementById('pokemon-weight').innerHTML = 'Weight: ' + currentPokemon['weight'] / 10 + ' kg';
+    // Erstelle den HTML-String für die Art, Höhe und Gewicht
+    let basicInfoHTML = `
+        <div class="info-item">
+            <div class="info-label">Species</div>
+            <div class="info-value">${capitalizedPokemonName}</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Height</div>
+            <div class="info-value">${currentPokemon['height'] / 10} m</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Weight</div>
+            <div class="info-value">${currentPokemon['weight'] / 10} kg</div>
+        </div>
+    `;
 
-    // Display Abilities directly from API using a for loop
-    let abilitiesHTML = 'Abilities: ';
+    // Füge Abilities hinzu
+    basicInfoHTML += '<div class="info-item"><div class="info-label">Abilities</div><div class="info-value">';
+
     for (let i = 0; i < currentPokemon['abilities'].length; i++) {
-        abilitiesHTML += currentPokemon['abilities'][i]['ability']['name'];
+        basicInfoHTML += currentPokemon['abilities'][i]['ability']['name'];
         if (i < currentPokemon['abilities'].length - 1) {
-            abilitiesHTML += ', '; // Add a comma if it's not the last ability
+            basicInfoHTML += ', ';
         }
     }
-    document.getElementById('pokemon-abilities').innerHTML = abilitiesHTML;
 
-    // Display Base Stats directly from API    // ... (unveränderte Teile)
-    
-        // Display Base Stats directly from API
-        let baseStatsHTML = '';
-        const statNames = ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed'];
-    
-        for (let i = 0; i < currentPokemon['stats'].length; i++) {
-            const statValue = currentPokemon['stats'][i]['base_stat'];
-    
-            // Fügen Sie das div mit dem Stat-Namen und dem Wert zum HTML-String hinzu
-            baseStatsHTML += `
-                <div class="stat-container">
-                    <div class="stat-name">${statNames[i]}</div>
-                    <div class="stat-value">${statValue}</div>
-                </div>
-            `;
-        }
-    
-        // Fügen Sie den HTML-String zum Container hinzu
-        document.getElementById('pokemon-base-stats').innerHTML += baseStatsHTML;
+    basicInfoHTML += '</div></div>';
 
+    // Setze den HTML-String als inneres HTML des Containers
+    basicInfoContainer.innerHTML = basicInfoHTML;
+}
+
+function renderBaseStats() {
+    // Display Base Stats directly from API
+    let baseStatsHTML = '';
+    const statNames = ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed'];
+
+    for (let i = 0; i < currentPokemon['stats'].length; i++) {
+        const statValue = currentPokemon['stats'][i]['base_stat'];
+
+        // Fügen Sie das div mit dem Stat-Namen und dem Wert zum HTML-String hinzu
+        baseStatsHTML += `
+            <div class="stat-container">
+                <div class="stat-name">${statNames[i]}</div>
+                <div class="stat-value">${statValue}</div>
+            </div>
+        `;
+    }
+
+    // Fügen Sie den HTML-String zum Container hinzu
+    document.getElementById('pokemon-base-stats').innerHTML = baseStatsHTML;
+}
+
+function renderMoves() {
     // Display Moves directly from API using a for loop
-    let movesHTML = '<div id="pokemon-moves-container">'; // Änderung: Verwenden Sie ein <div> als Container
+    let movesHTML = '<div id="pokemon-moves-container">';
     for (let i = 0; i < currentPokemon['moves'].length; i++) {
-        movesHTML += '<p>' + currentPokemon['moves'][i]['move']['name'] + '</p>'; // Änderung: Verwenden Sie <p> statt <li>
+        movesHTML += '<p>' + currentPokemon['moves'][i]['move']['name'] + '</p>';
     }
-    movesHTML += '</div>'; // Änderung: Schließen Sie den Container
+    movesHTML += '</div>';
     document.getElementById('pokemon-moves').innerHTML = movesHTML;
 }
+
 
 function setActiveSection(sectionId, headerId) {
     // Alle Abschnitte verbergen
