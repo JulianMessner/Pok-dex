@@ -12,12 +12,26 @@ async function loadPokemon() {
 
 // JavaScript
 function renderPokemonInfo() {
-    document.getElementById('pokemon-name').innerHTML = currentPokemon['name'];
+    const pokemonName = currentPokemon['name'];
+    const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
+    document.getElementById('pokemon-name').innerHTML = capitalizedPokemonName;
     document.getElementById('pokemon-image').src = currentPokemon['sprites']['front_default'];
 
+    // Display Types directly from API
+    let typesHTML = '';
+    for (let i = 0; i < currentPokemon['types'].length; i++) {
+        typesHTML += currentPokemon['types'][i]['type']['name'];
+        if (i < currentPokemon['types'].length - 1) {
+            typesHTML += ', '; // Add a comma if it's not the last type
+        }
+    }
+    document.getElementById('pokemon-type').innerHTML = typesHTML;
+
     // Display About-section directly from API
-    document.getElementById('pokemon-species').innerHTML = 'Species: ' + currentPokemon['species']['name'];
-    document.getElementById('pokemon-height').innerHTML = 'Height: ' + currentPokemon['height'] / 10 + ' m';
+    const speciesName = currentPokemon['species']['name'];
+    const capitalizedSpeciesName = speciesName.charAt(0).toUpperCase() + speciesName.slice(1);
+
+    document.getElementById('pokemon-species').innerHTML = 'Species: ' + capitalizedSpeciesName;    document.getElementById('pokemon-height').innerHTML = 'Height: ' + currentPokemon['height'] / 10 + ' m';
     document.getElementById('pokemon-weight').innerHTML = 'Weight: ' + currentPokemon['weight'] / 10 + ' kg';
 
     // Display Abilities directly from API using a for loop
@@ -46,6 +60,3 @@ function renderPokemonInfo() {
     movesHTML += '</ul>';
     document.getElementById('pokemon-moves').innerHTML = movesHTML;
 }
-
-
-
