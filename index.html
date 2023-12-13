@@ -13,10 +13,12 @@
 
 <body onload="loadPokemon()">
 
-    <div id="overview-card" onclick="showPokedex()">
+    <div id="overview-card" class="grow" onclick="showPokedex()">
         <div class="pokemon-info-overview">
-            <div id="overview-name"></div>
-            <div id="overview-types"></div>
+            <div class="overview-left">
+                <div id="overview-name"></div>
+                <div id="overview-types"></div>
+            </div>
         </div>
         <div class="pokemon-image-overview">
             <img id="overview-image" src="" alt="Pokemon Image">
