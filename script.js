@@ -39,21 +39,21 @@ function renderBasicInfo() {
     // Erstelle den HTML-String für die Art, Höhe und Gewicht
     let basicInfoHTML = `
         <div class="info-item">
-            <div class="info-label">Species</div>
-            <div class="info-value">${capitalizedPokemonName}</div>
+            <div class="info-label"><b>Species</b></div>
+            <div class="info-value"><b>${capitalizedPokemonName}</b></div>
         </div>
         <div class="info-item">
-            <div class="info-label">Height</div>
-            <div class="info-value">${currentPokemon['height'] / 10} m</div>
+            <div class="info-label"><b>Height</b></div>
+            <div class="info-value"><b>${currentPokemon['height'] / 10} m</b></div>
         </div>
         <div class="info-item">
-            <div class="info-label">Weight</div>
-            <div class="info-value">${currentPokemon['weight'] / 10} kg</div>
+            <div class="info-label"><b>Weight</b></div>
+            <div class="info-value"><b>${currentPokemon['weight'] / 10} kg</b></div>
         </div>
     `;
 
     // Füge Abilities hinzu
-    basicInfoHTML += '<div class="info-item"><div class="info-label">Abilities</div><div class="info-value">';
+    basicInfoHTML += '<div class="info-item"><div class="info-label"><b>Abilities</b></div><div class="info-value"><b>';
 
     for (let i = 0; i < currentPokemon['abilities'].length; i++) {
         basicInfoHTML += currentPokemon['abilities'][i]['ability']['name'];
@@ -62,7 +62,7 @@ function renderBasicInfo() {
         }
     }
 
-    basicInfoHTML += '</div></div>';
+    basicInfoHTML += '</b></div></div>';
 
     // Setze den HTML-String als inneres HTML des Containers
     basicInfoContainer.innerHTML = basicInfoHTML;
@@ -79,8 +79,8 @@ function renderBaseStats() {
         // Fügen Sie das div mit dem Stat-Namen und dem Wert zum HTML-String hinzu
         baseStatsHTML += `
             <div class="stat-container">
-                <div class="stat-name">${statNames[i]}</div>
-                <div class="stat-value">${statValue}</div>
+                <div class="stat-name"><b>${statNames[i]}</b></div>
+                <div class="stat-value"><b>${statValue}</b></div>
             </div>
         `;
     }
@@ -93,7 +93,7 @@ function renderMoves() {
     // Display Moves directly from API using a for loop
     let movesHTML = '<div id="pokemon-moves-container">';
     for (let i = 0; i < currentPokemon['moves'].length; i++) {
-        movesHTML += '<p>' + currentPokemon['moves'][i]['move']['name'] + '</p>';
+        movesHTML += '<p><b>' + currentPokemon['moves'][i]['move']['name'] + '</b></p>';
     }
     movesHTML += '</div>';
     document.getElementById('pokemon-moves').innerHTML = movesHTML;
@@ -158,3 +158,18 @@ function renderImageOverview() {
     const overviewImage = document.getElementById('overview-image');
     overviewImage.src = currentPokemon['sprites']['front_default'];
 }
+
+function showPokedex() {
+    const pokedex = document.getElementById('pokedex');
+
+    pokedex.classList.remove('d-none');
+    overlayOn();
+}
+
+function overlayOn() {
+    document.getElementById("overlay").style.display = "flex";
+  }
+
+  function overlayOff() {
+    document.getElementById("overlay").style.display = "none";
+  }

@@ -12,48 +12,53 @@
 </head>
 
 <body onload="loadPokemon()">
-        <div id="overview-card">
-            <div class="pokemon-info-overview">
-                <div id="overview-name"></div>
-                <div id="overview-types"></div>
-            </div>
-            <div class="pokemon-image-overview">
-                <img id="overview-image" src="" alt="Pokemon Image">
-            </div>
-        </div>
-        
 
-    <div id="pokedex">
-        <div id="pokemon-info">
-            <h1 id="pokemon-name">Name</h1>
-            <div id="pokemon-type"></div>
+    <div id="overview-card" onclick="showPokedex()">
+        <div class="pokemon-info-overview">
+            <div id="overview-name"></div>
+            <div id="overview-types"></div>
         </div>
-        <div class="image-of-pokemon-div">
-            <img id="pokemon-image" src="" alt="Pokemon Image">
+        <div class="pokemon-image-overview">
+            <img id="overview-image" src="" alt="Pokemon Image">
         </div>
-        <div id="pokemon-details">
+    </div>
 
-            <div class="headline-description">
-                <h2 onclick="setActiveSection('about-section', 'about')" id="about">About</h2>
-                <h2 onclick="setActiveSection('base-stats-section', 'base-stats')" id="base-stats">Base Stats</h2>
-                <h2 onclick="setActiveSection('moves-section', 'moves')" id="moves">Moves</h2>                
+    <div id="overlay">
+        <div id="pokedex" class="d-none">
+            <div id="pokemon-info">
+                <div class="pokemon-info-left">
+                    <h1 id="pokemon-name">Name</h1>
+                    <div id="pokemon-type"></div>
+                </div>
+                <button id="close-button" onclick="overlayOff()">X</button>
             </div>
-            <div class="about-section active" id="pokemon-basic-info">
-                <p id="pokemon-species"></p>
-                <p id="pokemon-height"></p>
-                <p id="pokemon-weight"></p>
-                <p id="pokemon-abilities"></p>
+            <div class="image-of-pokemon-div">
+                <img id="pokemon-image" src="" alt="Pokemon Image">
             </div>
-            <div class="base-stats-section d-none" id="pokemon-base-stats">
-                <p id="pokemon-hp"></p>
-                <p id="pokemon-attack"></p>
-                <p id="pokemon-defense"></p>
-                <p id="pokemon-sp-atk"></p>
-                <p id="pokemon-sp-def"></p>
-                <p id="pokemon-speed"></p>
-            </div>
-            <div class="moves-section d-none">
-                <div id="pokemon-moves"></div>
+            <div id="pokemon-details">
+
+                <div class="headline-description">
+                    <h2 onclick="setActiveSection('about-section', 'about')" id="about">About</h2>
+                    <h2 onclick="setActiveSection('base-stats-section', 'base-stats')" id="base-stats">Base Stats</h2>
+                    <h2 onclick="setActiveSection('moves-section', 'moves')" id="moves">Moves</h2>
+                </div>
+                <div class="about-section active" id="pokemon-basic-info">
+                    <p id="pokemon-species"></p>
+                    <p id="pokemon-height"></p>
+                    <p id="pokemon-weight"></p>
+                    <p id="pokemon-abilities"></p>
+                </div>
+                <div class="base-stats-section d-none" id="pokemon-base-stats">
+                    <p id="pokemon-hp"></p>
+                    <p id="pokemon-attack"></p>
+                    <p id="pokemon-defense"></p>
+                    <p id="pokemon-sp-atk"></p>
+                    <p id="pokemon-sp-def"></p>
+                    <p id="pokemon-speed"></p>
+                </div>
+                <div class="moves-section d-none">
+                    <div id="pokemon-moves"></div>
+                </div>
             </div>
         </div>
     </div>

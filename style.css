@@ -19,15 +19,15 @@ body {
     flex-direction: column;
     justify-content: space-between;
     width: 400px;
+    cursor: auto;
 }
 
 #pokemon-info {
     height: 50%;
-    width: 25%;
     padding: 12px;
     display: flex;
-    justify-content: center;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
     position: relative; /* Relative Position für die Positionierung des Bildes */
 }
 
@@ -83,6 +83,11 @@ h2:hover {
     display: block;
 }
 
+.about-section.active,
+.base-stats-section.active{
+    margin-top: 20px;
+}
+
 #pokemon-type,
 #pokemon-moves p {
     border: 1px solid #ddd;
@@ -110,6 +115,7 @@ h2:hover {
 
 .info-label{
     width: 100px;
+    color: grey;
 }
 
 .info-value{
@@ -123,7 +129,8 @@ h2:hover {
 
 .stat-name{
     width: 100px;
-    margin-right: 50%;
+    margin-right: 20%;
+    color: grey;
 } 
 
 .stat-value{
@@ -137,6 +144,7 @@ h2:hover {
     background-color: #fff;
     border-radius: 10px;
     margin: 20px;
+    cursor: pointer;
 }
 
 .pokemon-info-overview {
@@ -154,3 +162,27 @@ h2:hover {
     object-fit: cover;
 }
 
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+  }
+
+  #close-button{
+    z-index: 2;
+    font-size: 40px;
+    font-weight: bold;
+    color: lightgrey;
+    background-color: transparent;
+    border: none;
+  }
