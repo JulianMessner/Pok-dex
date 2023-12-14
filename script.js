@@ -47,7 +47,7 @@ function createOverlay(index) {
                         <div class="pokemon-type" id="pokemon-type-${index}"></div>
                     </div>
                     <button class="close-button" id="close-button-${index}" onclick="overlayOff(${index})">X</button>
-                </div>
+                    </div>
                 <div class="image-of-pokemon-div">
                     <img class="pokemon-image" id="pokemon-image-${index}" src="" alt="Pokemon Image">
                 </div>
@@ -71,7 +71,7 @@ function createOverlay(index) {
                         <p id="pokemon-sp-def-${index}"></p>
                         <p id="pokemon-speed-${index}"></p>
                     </div>
-                    <div class="moves-section" id="pokemon-moves-${index}">
+                    <div class="moves-section pokemon-moves" id="pokemon-moves-${index}">
                     </div>
                 </div>
             </div>
@@ -252,17 +252,17 @@ function renderImageOverview(index) {
 
 function showPokedex(index) {
     const pokedex = document.getElementById(`pokedex-${index}`);
-  
     pokedex.classList.remove("d-none");
     overlayOn();
 }
+
+
 
 function overlayOn() {
     document.querySelector(".overlay").style.display = "flex";
 }
 
 function overlayOff(index) {
-    const pokedex = document.getElementById(`pokedex-${index}`);
-    pokedex.classList.add("d-none");
     document.querySelector(".overlay").style.display = "none";
 }
+
