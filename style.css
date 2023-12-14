@@ -8,7 +8,7 @@ body {
     background: linear-gradient(to bottom right, #4fc3f7, #81d4fa, #b3e0f5, #e1f5fe);
 }
 
-#pokedex {
+.pokedex {
     min-height: 90vh;
     background: rgb(0, 128, 96);
     color: white;
@@ -20,35 +20,41 @@ body {
     justify-content: space-between;
     width: 400px;
     cursor: auto;
+    z-index: 2;
 }
 
-#pokemon-info {
+.pokemon-info {
     height: 50%;
     padding: 12px;
     display: flex;
     justify-content: space-between;
     align-items: start;
-    position: relative; /* Relative Position für die Positionierung des Bildes */
+    position: relative;
+    /* Relative Position für die Positionierung des Bildes */
 }
 
-.image-of-pokemon-div{
+.image-of-pokemon-div {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #pokemon-image {
-    position: absolute; /* Absolute Position innerhalb des relativen Containers */
-    border-radius: 50%; /* Abgerundete Ecken für das Bild */
+    position: absolute;
+    /* Absolute Position innerhalb des relativen Containers */
+    border-radius: 50%;
+    /* Abgerundete Ecken für das Bild */
     bottom: 20%;
     height: 85%;
     width: auto;
     object-fit: cover;
-    z-index: 0;
     image-rendering: pixelated;
-    image-rendering: crisp-edges; /* Alternative Einstellung für bestimmte Browser */
-    max-width: 100%; /* Verhindert, dass das Bild über seinen Container hinausgeht */
-    max-height: 100%; /* Verhindert, dass das Bild über seinen Container hinausgeht */
+    image-rendering: crisp-edges;
+    /* Alternative Einstellung für bestimmte Browser */
+    max-width: 100%;
+    /* Verhindert, dass das Bild über seinen Container hinausgeht */
+    max-height: 100%;
+    /* Verhindert, dass das Bild über seinen Container hinausgeht */
 }
 
 .headline-description {
@@ -56,7 +62,6 @@ body {
     display: flex;
     justify-content: space-evenly;
     margin-top: 20px;
-    z-index: 1;
 }
 
 h2 {
@@ -67,7 +72,7 @@ h2:hover {
     text-decoration: underline;
 }
 
-#pokemon-details {
+.pokemon-details {
     background-color: white;
     color: black;
     height: 40vh;
@@ -84,21 +89,22 @@ h2:hover {
 }
 
 .about-section.active,
-.base-stats-section.active{
+.base-stats-section.active {
     margin-top: 20px;
 }
 
-#pokemon-type,
-#pokemon-moves p {
+.pokemon-type,
+.pokemon-moves p {
     border: 1px solid #ddd;
     background-color: #b2acac1c;
     border-radius: 8px;
     padding: 4px;
-    margin: 5px 0; /* Zusätzlicher Abstand zwischen den <li> Elementen */
+    margin: 5px 0;
+    /* Zusätzlicher Abstand zwischen den <li> Elementen */
     text-align: center;
 }
 
-#overview-types{
+.overview-types {
     background-color: transparent;
     border-radius: 20px;
     border: 1px solid lightgrey;
@@ -106,7 +112,7 @@ h2:hover {
     text-align: center;
 }
 
-#pokemon-moves-container{
+#pokemon-moves-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -116,36 +122,36 @@ h2:hover {
     padding: 8px;
 }
 
-.info-item{
+.info-item {
     display: flex;
     justify-content: space-between;
 }
 
-.info-label{
+.info-label {
     width: 100px;
     color: grey;
 }
 
-.info-value{
+.info-value {
     width: 50%;
 }
 
-.stat-container{
+.stat-container {
     display: flex;
     justify-content: space-between;
 }
 
-.stat-name{
+.stat-name {
     width: 100px;
     margin-right: 20%;
     color: grey;
-} 
+}
 
-.stat-value{
+.stat-value {
     width: 50%;
 }
 
-#overview-card {
+.overview-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -161,14 +167,14 @@ h2:hover {
 }
 
 
-.overview-left{
+.overview-left {
     display: flex;
     flex-direction: column;
     align-items: start;
     width: 40px;
 }
 
-#overview-name{
+#overview-name {
     font-weight: bold;
 }
 
@@ -180,42 +186,42 @@ h2:hover {
     text-align: center;
 }
 
-#overview-image {
+.overview-image {
     border-radius: 50%;
     height: 300px;
     width: auto;
     object-fit: cover;
 }
 
-#overlay {
-    position: fixed; /* Sit on top of the page content */
-    display: none; /* Hidden by default */
+.overlay {
+    position: fixed;
+    display: none;
     justify-content: center;
     align-items: center;
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
-  }
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    z-index: 1;
+}
 
-  #close-button{
-    z-index: 2;
+
+.close-button {
     font-size: 40px;
     font-weight: bold;
     color: lightgrey;
     background-color: transparent;
     border: none;
-  }
+}
 
-  .grow { 
-    transition: all .2s ease-in-out; 
-    }
-    
-    .grow:hover { 
-    transform: scale(1.1); 
-    }
+.grow {
+    transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+    transform: scale(1.1);
+}

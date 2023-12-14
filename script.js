@@ -1,175 +1,268 @@
 let currentPokemon;
 
 async function loadPokemon() {
-    let url = 'https://pokeapi.co/api/v2/pokemon/pikachu';
-    let response = await fetch(url);
-    currentPokemon = await response.json();
-
-    console.log('Loaded pokemon', currentPokemon)
-
-    renderPokemonInfo();
-    renderPokemonInfoOverview();
-}
-
-// JavaScript
-// JavaScript
-function renderPokemonInfo() {
-    renderBasicInfo();
-    renderBaseStats();
-    renderMoves();
-}
-
-function renderBasicInfo() {
-    const pokemonName = currentPokemon['name'];
-    const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
-    let typesHTML = '';
-    for (let i = 0; i < currentPokemon['types'].length; i++) {
-        typesHTML += currentPokemon['types'][i]['type']['name'];
-        if (i < currentPokemon['types'].length - 1) {
-            typesHTML += ', '; // Add a comma if it's not the last type
-        }
+    for (let index = 1; index <= 30; index++) {
+      let url = `https://pokeapi.co/api/v2/pokemon/${index}`;
+      let response = await fetch(url);
+      
+      if (response.ok) {
+        currentPokemon = await response.json();
+        // Create the HTML elements for the overview card
+        createPokemonOverviewCard(index);
+        createOverlay(index);
+        // After the data is loaded, call the rendering functions
+        await renderPokemonInfo(index);
+        await renderPokemonInfoOverview(index);
+      } else {
+        console.error(`Failed to fetch data for URL: ${url}, status: ${response.status}`);
+      }
     }
-    document.getElementById('pokemon-type').innerHTML = typesHTML;
-    document.getElementById('pokemon-name').innerHTML = capitalizedPokemonName;
-    document.getElementById('pokemon-image').src = currentPokemon['sprites']['front_default'];
+  }
+  
+  
 
-    // Display Basic Info directly from API
-    const basicInfoContainer = document.getElementById('pokemon-basic-info');
-
-    // Erstelle den HTML-String für die Art, Höhe und Gewicht
-    let basicInfoHTML = `
-        <div class="info-item">
-            <div class="info-label"><b>Species</b></div>
-            <div class="info-value"><b>${capitalizedPokemonName}</b></div>
-        </div>
-        <div class="info-item">
-            <div class="info-label"><b>Height</b></div>
-            <div class="info-value"><b>${currentPokemon['height'] / 10} m</b></div>
-        </div>
-        <div class="info-item">
-            <div class="info-label"><b>Weight</b></div>
-            <div class="info-value"><b>${currentPokemon['weight'] / 10} kg</b></div>
+function createPokemonOverviewCard(index) {
+  document.body.innerHTML += `
+        <div id="overview-card-${index}" class="overview-card grow" onclick="showPokedex(${index})">
+            <div class="pokemon-info-overview">
+                <div class="overview-left">
+                    <div id="overview-name-${index}"></div>
+                    <div class="overview-types" id="overview-types-${index}"></div>
+                </div>
+            </div>
+            <div class="pokemon-image-overview">
+                <img class="overview-image" id="overview-image-${index}" src="" alt="Pokemon Image">
+            </div>
         </div>
     `;
-
-    // Füge Abilities hinzu
-    basicInfoHTML += '<div class="info-item"><div class="info-label"><b>Abilities</b></div><div class="info-value"><b>';
-
-    for (let i = 0; i < currentPokemon['abilities'].length; i++) {
-        basicInfoHTML += currentPokemon['abilities'][i]['ability']['name'];
-        if (i < currentPokemon['abilities'].length - 1) {
-            basicInfoHTML += ', ';
-        }
-    }
-
-    basicInfoHTML += '</b></div></div>';
-
-    // Setze den HTML-String als inneres HTML des Containers
-    basicInfoContainer.innerHTML = basicInfoHTML;
 }
 
-function renderBaseStats() {
-    // Display Base Stats directly from API
-    let baseStatsHTML = '';
-    const statNames = ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed'];
+function createOverlay(index) {
+  document.body.innerHTML += `
+  <div class="overlay" id="overlay-${index}">
+              <div class="pokedex" id="pokedex-${index}" class="d-none">
+                <div class="pokemon-info" id="pokemon-info-${index}">
+                    <div class="pokemon-info-left">
+                        <h1 id="pokemon-name-${index}">Name</h1>
+                        <div class="pokemon-type" id="pokemon-type-${index}"></div>
+                    </div>
+                    <button class="close-button" id="close-button-${index}" onclick="overlayOff(${index})">X</button>
+                </div>
+                <div class="image-of-pokemon-div">
+                    <img class="pokemon-image" id="pokemon-image-${index}" src="" alt="Pokemon Image">
+                </div>
+                <div class="pokemon-details" id="pokemon-details-${index}">
+                    <div class="headline-description">
+                    <h2 onclick="showAboutSection(${index})" id="about-${index}">About</h2>
+                    <h2 onclick="showBaseStatsSection(${index})" id="base-stats-${index}">Base Stats</h2>
+                    <h2 onclick="showMovesSection(${index})" id="moves-${index}">Moves</h2>                                       
+                    </div>
+                    <div class="about-section" id="pokemon-basic-info-${index}">
+                        <p id="pokemon-species-${index}"></p>
+                        <p id="pokemon-height-${index}"></p>
+                        <p id="pokemon-weight-${index}"></p>
+                        <p id="pokemon-abilities-${index}"></p>
+                    </div>
+                    <div class="base-stats-section" id="pokemon-base-stats-${index}">
+                        <p id="pokemon-hp-${index}"></p>
+                        <p id="pokemon-attack-${index}"></p>
+                        <p id="pokemon-defense-${index}"></p>
+                        <p id="pokemon-sp-atk-${index}"></p>
+                        <p id="pokemon-sp-def-${index}"></p>
+                        <p id="pokemon-speed-${index}"></p>
+                    </div>
+                    <div class="moves-section" id="pokemon-moves-${index}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
 
-    for (let i = 0; i < currentPokemon['stats'].length; i++) {
-        const statValue = currentPokemon['stats'][i]['base_stat'];
+// JavaScript
+// JavaScript
+function renderPokemonInfo(index) {
+  renderBasicInfo(index);
+  renderBaseStats(index);
+  renderMoves(index);
+}
 
-        // Fügen Sie das div mit dem Stat-Namen und dem Wert zum HTML-String hinzu
-        baseStatsHTML += `
+function renderBasicInfo(index) {
+    renderBasicHeader(index);
+    renderBasicHeight(index);
+    renderBasicWeight(index);
+    renderBasicAbilities(index);
+  }
+  
+  function renderBasicHeader(index) {
+    const pokemonName = currentPokemon["name"];
+    const capitalizedPokemonName =
+      pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
+    
+    // Überprüfen, ob das Element gefunden wurde, bevor auf es zugegriffen wird
+    const speciesContainer = document.getElementById(`pokemon-species-${index}`);
+    if (speciesContainer) {
+      speciesContainer.innerHTML = `<b>${capitalizedPokemonName}</b>`;
+    } else {
+      console.error(`Element not found for ID ${index}: pokemon-species-${index}`);
+    }
+  }
+  
+
+  
+  function renderBasicHeight(index) {
+    const heightContainer = document.getElementById(`pokemon-height-${index}`);
+    heightContainer.innerHTML = `<b>${currentPokemon["height"] / 10} m</b>`;
+  }
+  
+  function renderBasicWeight(index) {
+    const weightContainer = document.getElementById(`pokemon-weight-${index}`);
+    weightContainer.innerHTML = `<b>${currentPokemon["weight"] / 10} kg</b>`;
+  }
+  
+  function renderBasicAbilities(index) {
+    const abilitiesContainer = document.getElementById(`pokemon-abilities-${index}`);
+    let abilitiesHTML = '<div class="info-item"><div class="info-label"><b>Abilities</b></div><div class="info-value"><b>';
+  
+    for (let i = 0; i < currentPokemon["abilities"].length; i++) {
+      abilitiesHTML += currentPokemon["abilities"][i]["ability"]["name"];
+      if (i < currentPokemon["abilities"].length - 1) {
+        abilitiesHTML += ", ";
+      }
+    }
+  
+    abilitiesHTML += "</b></div></div>";
+    abilitiesContainer.innerHTML = abilitiesHTML;
+  }
+  
+
+function renderBaseStats(index) {
+  // Display Base Stats directly from API
+  let baseStatsHTML = "";
+  const statNames = ["HP", "Attack", "Defense", "Sp. Atk", "Sp. Def", "Speed"];
+
+  for (let i = 0; i < currentPokemon["stats"].length; i++) {
+    const statValue = currentPokemon["stats"][i]["base_stat"];
+
+    // Fügen Sie das div mit dem Stat-Namen und dem Wert zum HTML-String hinzu
+    baseStatsHTML += `
             <div class="stat-container">
                 <div class="stat-name"><b>${statNames[i]}</b></div>
                 <div class="stat-value"><b>${statValue}</b></div>
             </div>
         `;
-    }
+  }
 
-    // Fügen Sie den HTML-String zum Container hinzu
-    document.getElementById('pokemon-base-stats').innerHTML = baseStatsHTML;
+  // Fügen Sie den HTML-String zum Container hinzu
+  document.getElementById(`pokemon-base-stats-${index}`).innerHTML =
+    baseStatsHTML;
 }
 
-function renderMoves() {
-    // Display Moves directly from API using a for loop
-    let movesHTML = '<div id="pokemon-moves-container">';
-    for (let i = 0; i < currentPokemon['moves'].length; i++) {
-        movesHTML += '<p><b>' + currentPokemon['moves'][i]['move']['name'] + '</b></p>';
-    }
-    movesHTML += '</div>';
-    document.getElementById('pokemon-moves').innerHTML = movesHTML;
+function renderMoves(index) {
+  // Display Moves directly from API using a for loop
+  let movesHTML = '<div class="pokemon-moves-container" id="pokemon-moves-container">';
+  for (let i = 0; i < currentPokemon["moves"].length; i++) {
+    movesHTML +=
+      "<p><b>" + currentPokemon["moves"][i]["move"]["name"] + "</b></p>";
+  }
+  movesHTML += "</div>";
+  document.getElementById(`pokemon-moves-${index}`).innerHTML = movesHTML;
 }
 
+function setActiveSection(sectionId, headerId, index) {
+    const aboutSection = document.getElementById(`pokemon-basic-info-${index}`);
+    const statsSection = document.getElementById(`pokemon-base-stats-${index}`);
+    const movesSection = document.getElementById(`pokemon-moves-${index}`);
 
-function setActiveSection(sectionId, headerId) {
-    // Alle Abschnitte verbergen
-    const allSections = document.querySelectorAll('.about-section, .base-stats-section, .moves-section');
-    allSections.forEach(section => {
-        section.classList.add('d-none');
-        section.classList.remove('active');
-    });
+    // Zeige die ausgewählte Sektion
+    const selectedSection = document.getElementById(sectionId);
 
-    // Den gewünschten Abschnitt anzeigen
-    const selectedSection = document.querySelector(`.${sectionId}`);
-    selectedSection.classList.remove('d-none');
-    selectedSection.classList.add('active');
+    if (aboutSection) {
+        aboutSection.classList.toggle("d-none", sectionId !== `about-section-${index}`);
+        aboutSection.classList.toggle("active", sectionId === `about-section-${index}`);
+    }
+
+    if (statsSection) {
+        statsSection.classList.toggle("d-none", sectionId !== `base-stats-section-${index}`);
+        statsSection.classList.toggle("active", sectionId === `base-stats-section-${index}`);
+    }
+
+    if (movesSection) {
+        movesSection.classList.toggle("d-none", sectionId !== `moves-section-${index}`);
+        movesSection.classList.toggle("active", sectionId === `moves-section-${index}`);
+    }
 
     // Unterstreiche das angeklickte h2-Element
     underlineClickedHeader(headerId);
 }
 
-
 function underlineClickedHeader(headerId) {
-    // Alle h2-Elemente
-    const allHeaders = document.querySelectorAll('h2');
-    allHeaders.forEach(header => {
-        header.classList.remove('text-decoration-underline');
-    });
+  // Alle h2-Elemente
+  const allHeaders = document.querySelectorAll("h2");
+  allHeaders.forEach((header) => {
+    header.classList.remove("text-decoration-underline");
+  });
 
-    // Das angeklickte h2-Element unterstreichen
-    const clickedHeader = document.getElementById(headerId);
-    clickedHeader.classList.add('text-decoration-underline');
+  // Das angeklickte h2-Element unterstreichen
+  const clickedHeader = document.getElementById(headerId);
+  clickedHeader.classList.add("text-decoration-underline");
 }
 
+function renderPokemonInfoOverview(index) {
+  renderNameAndTypesOverview(index);
+  renderImageOverview(index);
+}
+
+function showAboutSection(index) {
+    setActiveSection(`about-section-${index}`, `about-${index}`, index);
+}
+
+function showBaseStatsSection(index) {
+    setActiveSection(`base-stats-section-${index}`, `base-stats-${index}`, index);
+}
+
+function showMovesSection(index) {
+    setActiveSection(`moves-section-${index}`, `moves-${index}`, index);
+}
+
+
+function renderNameAndTypesOverview(index) {
+    const overviewName = document.getElementById(`overview-name-${index}`);
+    const overviewTypes = document.getElementById(`overview-types-${index}`);
   
-function renderPokemonInfoOverview() {
-    renderNameAndTypesOverview();
-    renderImageOverview();
-}
-
-function renderNameAndTypesOverview() {
-    const overviewName = document.getElementById('overview-name');
-    const overviewTypes = document.getElementById('overview-types');
-
-    const pokemonName = currentPokemon['name'];
-    const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
-    let typesHTML = '';
-    for (let i = 0; i < currentPokemon['types'].length; i++) {
-        typesHTML += currentPokemon['types'][i]['type']['name'];
-        if (i < currentPokemon['types'].length - 1) {
-            typesHTML += ', ';
-        }
+    const pokemonName = currentPokemon["name"];
+    const capitalizedPokemonName =
+      pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
+    let typesHTML = "";
+    for (let i = 0; i < currentPokemon["types"].length; i++) {
+      typesHTML += currentPokemon["types"][i]["type"]["name"];
+      if (i < currentPokemon["types"].length - 1) {
+        typesHTML += ", ";
+      }
     }
-
+  
     overviewName.textContent = capitalizedPokemonName;
     overviewTypes.textContent = typesHTML;
+  }
+
+function renderImageOverview(index) {
+  const overviewImage = document.getElementById(`overview-image-${index}`);
+  overviewImage.src = currentPokemon["sprites"]["front_default"];
 }
 
-function renderImageOverview() {
-    const overviewImage = document.getElementById('overview-image');
-    overviewImage.src = currentPokemon['sprites']['front_default'];
-}
-
-function showPokedex() {
-    const pokedex = document.getElementById('pokedex');
-
-    pokedex.classList.remove('d-none');
+function showPokedex(index) {
+    const pokedex = document.getElementById(`pokedex-${index}`);
+  
+    pokedex.classList.remove("d-none");
     overlayOn();
 }
 
 function overlayOn() {
-    document.getElementById("overlay").style.display = "flex";
-  }
+    document.querySelector(".overlay").style.display = "flex";
+}
 
-  function overlayOff() {
-    document.getElementById("overlay").style.display = "none";
-  }
+function overlayOff(index) {
+    const pokedex = document.getElementById(`pokedex-${index}`);
+    pokedex.classList.add("d-none");
+    document.querySelector(".overlay").style.display = "none";
+}
