@@ -72,7 +72,7 @@ function createPokemonInfoSection(index, currentPokemon) {
     <div class="pokemon-info" id="pokemon-info-${index}">
       <div class="pokemon-info-left">
         <h1 id="pokemon-name-${index}">${capitalizedPokemonName}</h1>
-        <div class="pokemon-type" id="pokemon-type-${index}">${typesHTML}</div>
+        <div id="pokemon-type-${index}">${typesHTML}</div>
       </div>
       <button class="close-button" onclick="closePokedex(${index})">X</button>
     </div>
@@ -80,8 +80,24 @@ function createPokemonInfoSection(index, currentPokemon) {
 }
 
 function generateTypesHTML(types) {
-  return types.map(type => type["type"]["name"]).join(", ");
+  let typesHTML = "";
+
+  // Durchlaufe alle Typen im Array
+  for (let i = 0; i < types.length; i++) {
+    const type = types[i]["type"]["name"];
+
+    // Erstelle ein neues div-Element für jeden Typ
+    const typeDiv = document.createElement("div");
+    typeDiv.className = "pokemon-type";
+    typeDiv.textContent = type;
+
+    // Füge das div-Element dem typesHTML-String hinzu
+    typesHTML += typeDiv.outerHTML;
+  }
+
+  return typesHTML;
 }
+
 
 function createAboutSection(index, currentPokemon) {
   return `
@@ -205,8 +221,8 @@ function createPokemonOverviewCard(index) {
       <div id="overview-card-${index}" class="overview-card grow" onclick="showPokedex(${index})">
           <div class="pokemon-info-overview">
               <div class="overview-left">
-                  <div id="overview-name-${index}"></div>
-                  <div class="overview-types" id="overview-types-${index}"></div>
+                  <div class="overview-name" id="overview-name-${index}"></div>
+                  <div class="overview-type-div" id="overview-types-${index}"></div>
               </div>
           </div>
           <div class="pokemon-image-overview">
@@ -229,17 +245,27 @@ function renderNameAndTypesOverview(index) {
   const pokemonName = currentPokemon["name"];
   const capitalizedPokemonName =
     pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
-  let typesHTML = "";
-  for (let i = 0; i < currentPokemon["types"].length; i++) {
-    typesHTML += currentPokemon["types"][i]["type"]["name"];
-    if (i < currentPokemon["types"].length - 1) {
-      typesHTML += ", ";
-    }
-  }
 
   overviewName.textContent = capitalizedPokemonName;
-  overviewTypes.textContent = typesHTML;
+
+  // Lösche vorherige Inhalte im overviewTypes-Element
+  overviewTypes.innerHTML = "";
+
+  // Durchlaufe alle Typen des aktuellen Pokémons
+  for (let i = 0; i < currentPokemon["types"].length; i++) {
+    const type = currentPokemon["types"][i]["type"]["name"];
+
+    // Erstelle ein neues div-Element für jeden Typ
+    const typeDiv = document.createElement("div");
+    typeDiv.className = "overview-types";
+    typeDiv.textContent = type;
+
+    // Füge das div-Element dem overviewTypes-Element hinzu
+    overviewTypes.appendChild(typeDiv);
+  }
 }
+
+
 
 function renderImageOverview(index) {
   const overviewImage = document.getElementById(`overview-image-${index}`);

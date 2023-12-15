@@ -132,6 +132,7 @@ h2:hover {
     border: 1px solid lightgrey;
     width: 70px;
     text-align: center;
+    margin-bottom: 5px;
 }
 
 .pokemon-moves-container {
@@ -193,12 +194,15 @@ h2:hover {
 .overview-left {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: start;
     width: 40px;
 }
 
-#overview-name {
+.overview-name {
     font-weight: bold;
+    font-size: 22px;
+    margin: 5px 0;
 }
 
 .pokemon-info-overview {
