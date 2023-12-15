@@ -59,7 +59,7 @@ body {
     /* Abgerundete Ecken für das Bild */
     bottom: 20%;
     top: 10%;
-    height:300px;
+    height:280px;
     width: auto;
     object-fit: cover;
     image-rendering: pixelated;
@@ -210,10 +210,12 @@ h2:hover {
 }
 
 .overview-image {
+    object-position: center;  /* Optional: Zentriert das Bild innerhalb des Containers */
     border-radius: 50%;
-    height: 200px;
+    max-height: 100%;
+    height: 180px;
     width: auto;
-    object-fit: cover;
+    max-width: 100%;
 }
 
 .overlay {

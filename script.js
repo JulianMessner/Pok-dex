@@ -1,7 +1,7 @@
 let pokemons = []; // Array zur Speicherung der Pokemon-Daten
 
 async function loadPokemon() {
-  for (let index = 1; index <= 30; index++) {
+  for (let index = 1; index <= 40; index++) {
     let url = `https://pokeapi.co/api/v2/pokemon/${index}`;
     let response = await fetch(url);
 
@@ -11,12 +11,15 @@ async function loadPokemon() {
       createPokemonOverviewCard(index);
       await renderPokemonInfoOverview(index);
       await renderMovesOverview(index); // Neu hinzugefügte Zeile
+      console.log(pokemonData);
     } else {
       console.error(
         `Failed to fetch data for URL: ${url}, status: ${response.status}`
       );
     }
   }
+
+
 }
 
 async function renderMovesOverview(index) {
@@ -156,7 +159,7 @@ function showPokedex(index) {
     <div id="${pokedexId}" class="pokedex" style="display: block;">
       ${pokemonInfoSection}
       <div class="image-of-pokemon-div">
-        <img class="pokemon-image" id="pokemon-image-${index}" src="${currentPokemon["sprites"]["front_default"]}" alt="Pokemon Image">
+        <img class="pokemon-image" id="pokemon-image-${index}" src="${currentPokemon[`sprites`][`other`][`official-artwork`][`front_default`]}" alt="Pokemon Image">
       </div>
       <div class="pokemon-details" id="pokemon-details-${index}">
         <div class="headline-description">
@@ -241,7 +244,7 @@ function renderNameAndTypesOverview(index) {
 function renderImageOverview(index) {
   const overviewImage = document.getElementById(`overview-image-${index}`);
   const currentPokemon = pokemons[index - 1]; // Direkter Zugriff auf die Pokemon-Daten
-  overviewImage.src = currentPokemon["sprites"]["front_default"];
+  overviewImage.src = currentPokemon[`sprites`][`other`][`official-artwork`][`front_default`];
 }
 
 
