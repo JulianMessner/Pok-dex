@@ -58,7 +58,8 @@ body {
     border-radius: 50%;
     /* Abgerundete Ecken für das Bild */
     bottom: 20%;
-    height: 85%;
+    top: 10%;
+    height:300px;
     width: auto;
     object-fit: cover;
     image-rendering: pixelated;
@@ -79,6 +80,7 @@ body {
 
 h2 {
     cursor: pointer;
+    font-size: 26px;
 }
 
 h2:hover {
@@ -95,14 +97,21 @@ h2:hover {
     width: 100%;
 }
 
+.base-stats-section {
+    overflow-y: auto;  /* Hinzugefügt: Scrollbalken bei Bedarf anzeigen */
+    max-height: 100%;  /* Maximal auf die Höhe des Containers beschränken */
+    /* Andere Eigenschaften bleiben unverändert */
+}
+
+
 .about-section.active,
 .base-stats-section.active,
 .moves-section.active {
     display: block;
 }
 
-.about-section.active,
-.base-stats-section.active {
+.about-section,
+.base-stats-section {
     margin-top: 20px;
 }
 
@@ -138,6 +147,7 @@ h2:hover {
 .info-container {
     display: flex;
     justify-content: space-between;
+    margin-right: 10px;
 }
 
 .info-label {
@@ -155,7 +165,7 @@ h2:hover {
 }
 
 .stat-name {
-    width: 100px;
+    width: 150px;
     margin-right: 20%;
     color: grey;
 }
@@ -201,7 +211,7 @@ h2:hover {
 
 .overview-image {
     border-radius: 50%;
-    height: 300px;
+    height: 200px;
     width: auto;
     object-fit: cover;
 }

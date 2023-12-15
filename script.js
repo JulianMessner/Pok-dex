@@ -87,15 +87,15 @@ function createAboutSection(index, currentPokemon) {
         <div class="info-label"><b>Species</b></div>
         <div class="info-value"><b>${currentPokemon["species"]["name"].charAt(0).toUpperCase() + currentPokemon["species"]["name"].slice(1)}</b></div>
         </div>
-      <div class="stat-container">
+      <div class="info-container">
         <div class="info-label"><b>Height</b></div>
         <div class="info-value"><b>${currentPokemon["height"]}</b></div>
       </div>
-      <div class="stat-container">
+      <div class="info-container">
         <div class="info-label"><b>Weight</b></div>
         <div class="info-value"><b>${currentPokemon["weight"]}</b></div>
       </div>
-      <div class="stat-container">
+      <div class="info-container">
         <div class="info-label"><b>Abilities</b></div>
         <div class="info-value"><b>${generateAbilitiesHTML(currentPokemon["abilities"])}</b></div>
       </div>
