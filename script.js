@@ -3,26 +3,27 @@ let currentIndex = 0;
 const cardsPerLoad = 8;
 
 const typeColors = {
-  normal: '#209aca',
-  fire: 'orange',
-  water: 'blue',
-  grass: 'green',
-  electric: '#dcca18',
-  ice: 'lightblue',
-  fighting: 'red',
-  poison: 'purple',
-  ground: 'brown',
-  flying: 'skyblue',
-  psychic: 'pink',
-  bug: '#25b025',
-  rock: 'gray',
-  ghost: 'violet',
-  dark: 'darkgray',
-  steel: 'silver',
-  dragon: 'indigo',
-  fairy: '#f295a5'
+  normal: 'linear-gradient(to bottom right, #209aca, #7dc0f6)',
+  fire: 'linear-gradient(to bottom right, orange, #ffc478)',
+  water: 'linear-gradient(to bottom right, blue, #78c6f6)',
+  grass: 'linear-gradient(to bottom right, green, #9bdb9e)',
+  electric: 'linear-gradient(to bottom right, #dcca18, #f5e570)',
+  ice: 'linear-gradient(to bottom right, lightblue, #9ae3ff)',
+  fighting: 'linear-gradient(to bottom right, red, #ff7c7c)',
+  poison: 'linear-gradient(to bottom right, purple, #d994e4)',
+  ground: 'linear-gradient(to bottom right, brown, #dcbba0)',
+  flying: 'linear-gradient(to bottom right, skyblue, #a0d5f5)',
+  psychic: 'linear-gradient(to bottom right, pink, #ffb6c8)',
+  bug: 'linear-gradient(to bottom right, #25b025, #7ed67e)',
+  rock: 'linear-gradient(to bottom right, gray, #a0a0a0)',
+  ghost: 'linear-gradient(to bottom right, violet, #cfa1e9)',
+  dark: 'linear-gradient(to bottom right, darkgray, #a9a9a9)',
+  steel: 'linear-gradient(to bottom right, silver, #c9c9c9)',
+  dragon: 'linear-gradient(to bottom right, indigo, #c59eff)',
+  fairy: 'linear-gradient(to bottom right, #f295a5, #f7c5d5)',
   // Füge weitere Typen nach Bedarf hinzu
 };
+
 
 async function loadPokemon() {
   for (let index = 1; index <= 40; index++) {
@@ -46,7 +47,11 @@ async function loadPokemon() {
       );
     }
   }
+
 }
+
+
+
 
 async function loadMorePokemon() {
   const startIndex = currentIndex + 1;
@@ -95,7 +100,7 @@ async function loadMorePokemon() {
   }
 }
 
-
+ 
 
 
 async function renderMovesOverview(index) {
@@ -178,7 +183,7 @@ function generateTypesHTML(types, index) {
 
     // Setze die Hintergrundfarbe basierend auf dem Type-Wert
     const backgroundColor = getTypeColor(type);
-    typeDiv.style.backgroundColor = backgroundColor;
+    typeDiv.style.background = backgroundColor;
 
     // Füge das div-Element dem typesHTML-String hinzu
     typesHTML += typeDiv.outerHTML;
@@ -272,7 +277,7 @@ function showPokedex(index) {
   
 
   overlay.innerHTML = `
-    <div id="${pokedexId}" class="pokedex" style="display: block; background-color: ${backgroundColor};">
+    <div id="${pokedexId}" class="pokedex" style="display: block; background: ${backgroundColor};">
       ${pokemonInfoSection}
       <div class="image-of-pokemon-div">
         <img class="pokemon-image" id="pokemon-image-${index}" src="${currentPokemon[`sprites`][`other`][`official-artwork`][`front_default`]}" alt="Pokemon Image">
@@ -324,7 +329,7 @@ function closePokedex(index) {
 }
 
 function createPokemonOverviewCard(index) {
-  document.body.innerHTML += `
+  document.getElementById('content').innerHTML += `
       <div id="overview-card-${index}" class="overview-card grow" onclick="showPokedex(${index})">
           <div class="pokemon-info-overview">
               <div class="overview-left">
@@ -381,7 +386,7 @@ function renderNameAndTypesOverview(index) {
 
     // Setze die Hintergrundfarbe basierend auf dem Type-Wert
     const backgroundColor = getTypeColor(type);
-    typeDiv.style.backgroundColor = backgroundColor;
+    typeDiv.style.background = backgroundColor;
 
     // Füge das div-Element zum overviewTypes hinzu
     overviewTypes.appendChild(typeDiv);
@@ -503,6 +508,7 @@ function setCardBackgroundColor(index) {
     const type = currentPokemon.types[0].type.name; // Verwende den ersten Type-Wert
 
     const backgroundColor = getTypeColor(type);
-    overviewCard.style.backgroundColor = backgroundColor;
+    overviewCard.style.background = backgroundColor;
   }
 }
+
