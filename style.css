@@ -85,6 +85,7 @@ h2 {
     padding-bottom: 24px;
     margin-bottom: 0 !important;
     color: grey !important;
+    z-index: 5;
 }
 
 .text-decoration-underline {
@@ -139,7 +140,6 @@ h2 {
     margin-bottom: 0;
 }
 
-.pokemon-type,
 .pokemon-moves p {
     border: 1px solid #ddd;
     background-color: #b2acac1c;
@@ -150,13 +150,25 @@ h2 {
     text-align: center;
 }
 
+.pokemon-type{
+    border: 1px solid #ddd;
+    background-color: #b2acac1c;
+    border-radius: 8px;
+    padding: 4px;
+    margin: 5px 0;
+    /* Zusätzlicher Abstand zwischen den <li> Elementen */
+    text-align: center;
+    width: 100px;
+}
+
 .overview-types {
     background-color: #b2acac1c;
-    border-radius: 20px;
+    border-radius: 8px;
     border: 1px solid lightgrey;
     width: 70px;
     text-align: center;
     margin-bottom: 5px;
+    padding: 2px;
 }
 
 .pokemon-moves-container {
@@ -258,7 +270,7 @@ h2 {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     cursor: pointer;
     z-index: 1;
 }
@@ -287,7 +299,7 @@ h2 {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    z-index: 2;
+    z-index: -2;
 }
 
 .arrow {
@@ -301,8 +313,10 @@ h2 {
 
 .left-arrow {
     margin-left: 10px;
+    font-size: 50px;
 }
 
 .right-arrow {
     margin-right: 10px;
+    font-size: 50px;
 }

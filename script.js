@@ -1,6 +1,28 @@
 let pokemons = []; // Array zur Speicherung der Pokemon-Daten
 let currentIndex = 0;
 
+const typeColors = {
+  normal: '#209aca',
+  fire: 'orange',
+  water: 'blue',
+  grass: 'green',
+  electric: '#dcca18',
+  ice: 'lightblue',
+  fighting: 'red',
+  poison: 'purple',
+  ground: 'brown',
+  flying: 'skyblue',
+  psychic: 'pink',
+  bug: '#25b025',
+  rock: 'gray',
+  ghost: 'violet',
+  dark: 'darkgray',
+  steel: 'silver',
+  dragon: 'indigo',
+  fairy: '#f295a5'
+  // Füge weitere Typen nach Bedarf hinzu
+};
+
 async function loadPokemon() {
   for (let index = 1; index <= 40; index++) {
     let url = `https://pokeapi.co/api/v2/pokemon/${index}`;
@@ -66,20 +88,22 @@ async function renderMovesOverview(index) {
 
 function createPokemonInfoSection(index, currentPokemon) {
   const capitalizedPokemonName = currentPokemon["name"].charAt(0).toUpperCase() + currentPokemon["name"].slice(1);
-  const typesHTML = generateTypesHTML(currentPokemon["types"]);
-  
+  const typesHTML = generateTypesHTML(currentPokemon["types"], index);
+
   return `
     <div class="pokemon-info" id="pokemon-info-${index}">
       <div class="pokemon-info-left">
         <h1 id="pokemon-name-${index}">${capitalizedPokemonName}</h1>
-        <div id="pokemon-type-${index}">${typesHTML}</div>
+        <div id="pokemon-type-${index}">
+          ${typesHTML}
+        </div>
       </div>
       <button class="close-button" onclick="closePokedex(${index})">X</button>
     </div>
   `;
 }
 
-function generateTypesHTML(types) {
+function generateTypesHTML(types, index) {
   let typesHTML = "";
 
   // Durchlaufe alle Typen im Array
@@ -88,8 +112,13 @@ function generateTypesHTML(types) {
 
     // Erstelle ein neues div-Element für jeden Typ
     const typeDiv = document.createElement("div");
+    typeDiv.id = `pokemon-type-${index}-${i}`; // Verwende eine ID mit eindeutigem Index
     typeDiv.className = "pokemon-type";
     typeDiv.textContent = type;
+
+    // Setze die Hintergrundfarbe basierend auf dem Type-Wert
+    const backgroundColor = getTypeColor(type);
+    typeDiv.style.backgroundColor = backgroundColor;
 
     // Füge das div-Element dem typesHTML-String hinzu
     typesHTML += typeDiv.outerHTML;
@@ -97,6 +126,8 @@ function generateTypesHTML(types) {
 
   return typesHTML;
 }
+
+
 
 
 function createAboutSection(index, currentPokemon) {
@@ -159,11 +190,11 @@ function createBaseStatsSection(index, currentPokemon) {
 
 
 function showPokedex(index) {
-    const overlayId = "overlay";
-    const pokedexId = "pokedex-" + index;
-  
-    const overlay = document.getElementById(overlayId);
-    overlay.innerHTML = ""; // Clear previous content
+  const overlayId = "overlay";
+  const pokedexId = "pokedex-" + index;
+
+  const overlay = document.getElementById(overlayId);
+  overlay.innerHTML = ""; // Clear previous content
 
   const currentPokemon = pokemons[index - 1];
 
@@ -171,8 +202,17 @@ function showPokedex(index) {
   const aboutSection = createAboutSection(index, currentPokemon);
   const baseStatsSection = createBaseStatsSection(index, currentPokemon);
 
+  // Setze die Hintergrundfarben basierend auf den Pokemon-Typen
+  const backgroundColor = getTypeColor(currentPokemon.types[0].type.name);
+  const overlayCard = document.getElementById(pokedexId);
+
+  if (overlayCard) {
+    overlayCard.style.backgroundColor = backgroundColor;
+  }
+  
+
   overlay.innerHTML = `
-    <div id="${pokedexId}" class="pokedex" style="display: block;">
+    <div id="${pokedexId}" class="pokedex" style="display: block; background-color: ${backgroundColor};">
       ${pokemonInfoSection}
       <div class="image-of-pokemon-div">
         <img class="pokemon-image" id="pokemon-image-${index}" src="${currentPokemon[`sprites`][`other`][`official-artwork`][`front_default`]}" alt="Pokemon Image">
@@ -190,10 +230,9 @@ function showPokedex(index) {
       </div>
     </div>
     <div class="overlay-arrows">
-    <button class="arrow left-arrow" onclick="showPreviousPokedex()"><</button>
-    <button class="arrow right-arrow" onclick="showNextPokedex()">></button>
-</div>
-
+      <button class="arrow left-arrow" onclick="showPreviousPokedex()"><</button>
+      <button class="arrow right-arrow" onclick="showNextPokedex()">></button>
+    </div>
   `;
 
   currentIndex = index - 1;
@@ -201,6 +240,7 @@ function showPokedex(index) {
   overlay.style.display = "block";
   renderMovesOverview(index);
 }
+
 
 
 function generateAbilitiesHTML(abilities) {
@@ -237,6 +277,8 @@ function createPokemonOverviewCard(index) {
           </div>
       </div>
   `;
+
+  setCardBackgroundColor(index);
 }
 
 function renderPokemonInfoOverview(index) {
@@ -248,29 +290,37 @@ function renderNameAndTypesOverview(index) {
   const overviewName = document.getElementById(`overview-name-${index}`);
   const overviewTypes = document.getElementById(`overview-types-${index}`);
 
-  const currentPokemon = pokemons[index - 1]; // Direkter Zugriff auf die Pokemon-Daten
-  const pokemonName = currentPokemon["name"];
+  const currentPokemon = pokemons[index - 1];
+  const pokemonName = currentPokemon.name;
   const capitalizedPokemonName =
     pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
 
   overviewName.textContent = capitalizedPokemonName;
 
-  // Lösche vorherige Inhalte im overviewTypes-Element
   overviewTypes.innerHTML = "";
 
-  // Durchlaufe alle Typen des aktuellen Pokémons
-  for (let i = 0; i < currentPokemon["types"].length; i++) {
-    const type = currentPokemon["types"][i]["type"]["name"];
+  for (let i = 0; i < currentPokemon.types.length; i++) {
+    const type = currentPokemon.types[i].type.name;
 
     // Erstelle ein neues div-Element für jeden Typ
     const typeDiv = document.createElement("div");
     typeDiv.className = "overview-types";
     typeDiv.textContent = type;
 
-    // Füge das div-Element dem overviewTypes-Element hinzu
+    // Setze die Hintergrundfarbe basierend auf dem Type-Wert
+    const backgroundColor = getTypeColor(type);
+    typeDiv.style.backgroundColor = backgroundColor;
+
+    // Füge das div-Element zum overviewTypes hinzu
     overviewTypes.appendChild(typeDiv);
   }
+
+  // Setze die Hintergrundfarbe basierend auf dem ersten Type-Wert
+  const backgroundColor = getTypeColor(currentPokemon.types[0].type.name);
+  const overviewCard = document.getElementById(`overview-card-${index}`);
+  overviewCard.style.backgroundColor = backgroundColor;
 }
+
 
 
 
@@ -352,4 +402,20 @@ function showPreviousPokedex() {
 function showNextPokedex() {
   currentIndex = (currentIndex + 1) % pokemons.length;
   showPokedex(currentIndex + 1);
+}
+
+function getTypeColor(type) {
+  return typeColors[type] || typeColors.default;
+}
+
+function setCardBackgroundColor(index) {
+  const currentPokemon = pokemons[index - 1];
+  const overviewCard = document.getElementById(`overview-card-${index}`);
+
+  if (currentPokemon.types.length > 0) {
+    const type = currentPokemon.types[0].type.name; // Verwende den ersten Type-Wert
+
+    const backgroundColor = getTypeColor(type);
+    overviewCard.style.backgroundColor = backgroundColor;
+  }
 }
