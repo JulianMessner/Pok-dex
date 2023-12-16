@@ -275,14 +275,15 @@ h2 {
     z-index: 1;
 }
 
-
-.close-button {
+.pokemon-info-right button{
     font-size: 40px;
     font-weight: bold;
-    color: lightgrey;
+    color: grey;
     background-color: transparent;
     border: none;
     z-index: 3;
+    margin-top: -15px;
+    margin-bottom: 10px;
 }
 
 .grow {

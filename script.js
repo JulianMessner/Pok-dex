@@ -87,7 +87,9 @@ async function renderMovesOverview(index) {
 
 
 function createPokemonInfoSection(index, currentPokemon) {
-  const capitalizedPokemonName = currentPokemon["name"].charAt(0).toUpperCase() + currentPokemon["name"].slice(1);
+  const capitalizedPokemonName =
+    currentPokemon["name"].charAt(0).toUpperCase() +
+    currentPokemon["name"].slice(1);
   const typesHTML = generateTypesHTML(currentPokemon["types"], index);
 
   return `
@@ -98,10 +100,14 @@ function createPokemonInfoSection(index, currentPokemon) {
           ${typesHTML}
         </div>
       </div>
-      <button class="close-button" onclick="closePokedex(${index})">X</button>
+      <div class="pokemon-info-right">
+        <button class="close-button" onclick="closePokedex(${index})">X</button>
+        <div id="pokedex-number-${index}" class="pokedex-number"><b>#${String(index).padStart(3, '0')}</b></div>
+      </div>
     </div>
   `;
 }
+
 
 function generateTypesHTML(types, index) {
   let typesHTML = "";
