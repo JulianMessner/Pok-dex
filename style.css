@@ -280,3 +280,29 @@ h2 {
 .grow:hover {
     transform: scale(1.1);
 }
+
+.overlay-arrows {
+    position: fixed;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+}
+
+.arrow {
+    font-size: 40px;
+    font-weight: bold;
+    color: lightgrey;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.left-arrow {
+    margin-left: 10px;
+}
+
+.right-arrow {
+    margin-right: 10px;
+}

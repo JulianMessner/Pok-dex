@@ -1,4 +1,5 @@
 let pokemons = []; // Array zur Speicherung der Pokemon-Daten
+let currentIndex = 0;
 
 async function loadPokemon() {
   for (let index = 1; index <= 40; index++) {
@@ -11,7 +12,6 @@ async function loadPokemon() {
       createPokemonOverviewCard(index);
       await renderPokemonInfoOverview(index);
       await renderMovesOverview(index); // Neu hinzugefügte Zeile
-      console.log(pokemonData);
     } else {
       console.error(
         `Failed to fetch data for URL: ${url}, status: ${response.status}`
@@ -189,7 +189,14 @@ function showPokedex(index) {
         </div>
       </div>
     </div>
+    <div class="overlay-arrows">
+    <button class="arrow left-arrow" onclick="showPreviousPokedex()"><</button>
+    <button class="arrow right-arrow" onclick="showNextPokedex()">></button>
+</div>
+
   `;
+
+  currentIndex = index - 1;
 
   overlay.style.display = "block";
   renderMovesOverview(index);
@@ -335,4 +342,14 @@ function showMovesSection(index) {
 
   // Header unterstreichen
   underlineClickedHeader(`moves-${index}`);
+}
+
+function showPreviousPokedex() {
+  currentIndex = (currentIndex - 1 + pokemons.length) % pokemons.length;
+  showPokedex(currentIndex + 1);
+}
+
+function showNextPokedex() {
+  currentIndex = (currentIndex + 1) % pokemons.length;
+  showPokedex(currentIndex + 1);
 }
