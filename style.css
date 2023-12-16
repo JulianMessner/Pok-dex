@@ -11,28 +11,24 @@ body {
 
 .pokedex {
     position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
     border-radius: 10px;
     height: 90vh;
-    width: auto;
-    z-index: 1000;
-    display: none;
+    width: 430px;
     min-height: 90vh;
     background: rgb(0, 128, 96);
     color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 400px;
     cursor: auto;
     z-index: 2;
-
 }
 
 
@@ -59,7 +55,7 @@ body {
     /* Abgerundete Ecken für das Bild */
     bottom: 20%;
     top: 10%;
-    height:280px;
+    height: 280px;
     width: auto;
     object-fit: cover;
     image-rendering: pixelated;
@@ -74,17 +70,33 @@ body {
 .headline-description {
     position: relative;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     margin-top: 20px;
+    border-bottom: 1px solid lightgrey;
+
 }
 
 h2 {
     cursor: pointer;
-    font-size: 26px;
+    font-size: 22px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    margin-bottom: 0 !important;
+    color: grey !important;
 }
 
-h2:hover {
-    text-decoration: underline;
+.text-decoration-underline {
+    margin-bottom: 0;
+    color: black !important;
+    text-decoration: none !important;
+}
+
+.h2-decoration{
+    margin-bottom: 0;
+    color: black !important;
+    border-bottom: 4px solid black;
 }
 
 .pokemon-details {
@@ -93,13 +105,17 @@ h2:hover {
     height: 45vh;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    padding: 24px;
     width: 100%;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 24px;
 }
 
 .base-stats-section {
-    overflow-y: auto;  /* Hinzugefügt: Scrollbalken bei Bedarf anzeigen */
-    max-height: 100%;  /* Maximal auf die Höhe des Containers beschränken */
+    overflow-y: auto;
+    /* Hinzugefügt: Scrollbalken bei Bedarf anzeigen */
+    max-height: 100%;
+    /* Maximal auf die Höhe des Containers beschränken */
     /* Andere Eigenschaften bleiben unverändert */
 }
 
@@ -110,9 +126,17 @@ h2:hover {
     display: block;
 }
 
+
+
 .about-section,
 .base-stats-section {
     margin-top: 20px;
+}
+
+.about-section,
+.base-stats-section,
+.moves-section {
+    margin-bottom: 0;
 }
 
 .pokemon-type,
@@ -127,7 +151,7 @@ h2:hover {
 }
 
 .overview-types {
-    background-color: transparent;
+    background-color: #b2acac1c;
     border-radius: 20px;
     border: 1px solid lightgrey;
     width: 70px;
@@ -214,7 +238,8 @@ h2:hover {
 }
 
 .overview-image {
-    object-position: center;  /* Optional: Zentriert das Bild innerhalb des Containers */
+    object-position: center;
+    /* Optional: Zentriert das Bild innerhalb des Containers */
     border-radius: 50%;
     max-height: 100%;
     height: 180px;

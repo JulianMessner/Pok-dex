@@ -179,7 +179,7 @@ function showPokedex(index) {
       </div>
       <div class="pokemon-details" id="pokemon-details-${index}">
         <div class="headline-description">
-          <h2 onclick="showAboutSection(${index})" id="about-${index}">About</h2>
+          <h2 onclick="showAboutSection(${index})" id="about-${index}" class="h2-decoration">About</h2>
           <h2 onclick="showBaseStatsSection(${index})" id="base-stats-${index}">Base Stats</h2>
           <h2 onclick="showMovesSection(${index})" id="moves-${index}">Moves</h2>
         </div>
@@ -278,12 +278,12 @@ function underlineClickedHeader(headerId) {
   // Alle h2-Elemente
   const allHeaders = document.querySelectorAll("h2");
   allHeaders.forEach((header) => {
-    header.classList.remove("text-decoration-underline");
+    header.classList.remove("h2-decoration");
   });
 
   // Das angeklickte h2-Element unterstreichen
   const clickedHeader = document.getElementById(headerId);
-  clickedHeader.classList.add("text-decoration-underline");
+  clickedHeader.classList.add("h2-decoration");
 }
 
 function showAboutSection(index) {
