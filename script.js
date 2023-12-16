@@ -1,5 +1,6 @@
 let pokemons = []; // Array zur Speicherung der Pokemon-Daten
 let currentIndex = 0;
+const cardsPerLoad = 8;
 
 const typeColors = {
   normal: '#209aca',
@@ -30,10 +31,53 @@ async function loadPokemon() {
 
     if (response.ok) {
       let pokemonData = await response.json();
-      pokemons.push(pokemonData); // Speichern Sie jedes Pokemon im Array
-      createPokemonOverviewCard(index);
+      pokemons.push(pokemonData);
+
+      // Änderung: Nur für die ersten 8 Pokémon wird die Karte erstellt
+      if (index <= 8) {
+        createPokemonOverviewCard(index);
+      }
+
       await renderPokemonInfoOverview(index);
-      await renderMovesOverview(index); // Neu hinzugefügte Zeile
+      await renderMovesOverview(index);
+    } else {
+      console.error(
+        `Failed to fetch data for URL: ${url}, status: ${response.status}`
+      );
+    }
+  }
+}
+
+async function loadMorePokemon() {
+  const startIndex = currentIndex + 1;
+  const endIndex = Math.min(startIndex + cardsPerLoad, 41); // Maximal 40 Overview-Cards
+
+  let renderedCards = 0; // Zähler für gerenderte Karten
+
+  for (let index = startIndex; index < endIndex; index++) {
+    if (index >= pokemons.length) {
+      // Wenn alle vorhandenen Pokemon bereits geladen wurden oder das Limit erreicht ist, breche die Schleife ab
+      break;
+    }
+
+    // Daten für das neue Pokemon laden
+    let url = `https://pokeapi.co/api/v2/pokemon/${index + 1}`;
+    let response = await fetch(url);
+
+    if (response.ok) {
+      let pokemonData = await response.json();
+      pokemons[index] = pokemonData;
+
+      // Erstelle die Overview-Card für das neue Pokemon
+      createPokemonOverviewCard(index + (startIndex === 1 ? 8 : 8));
+
+      renderedCards++; // Inkrementiere den Zähler
+
+      // Wenn das neue Pokemon noch nicht in der Overview angezeigt wurde, zeige es an
+      if (index >= startIndex) {
+        await renderPokemonInfoOverview(index + (startIndex === 1 ? 8 : 8));
+        await renderMovesOverview(index + 1);
+      }
     } else {
       console.error(
         `Failed to fetch data for URL: ${url}, status: ${response.status}`
@@ -41,8 +85,18 @@ async function loadPokemon() {
     }
   }
 
+  // Aktualisiere den aktuellen Index nach dem Laden der neuen Pokemon
+  currentIndex = endIndex - 1;
 
+  // Überprüfe, ob das Limit erreicht wurde und blende den Button aus
+  if (renderedCards + currentIndex >= 40) {
+    document.getElementById('load-more-button').style.display = 'none'; // Verstecke den Button
+    console.log("Maximal 40 Overview-Cards wurden bereits gerendert.");
+  }
 }
+
+
+
 
 async function renderMovesOverview(index) {
   const movesSection = document.getElementById(`pokemon-moves-${index}`);
@@ -296,8 +350,20 @@ function renderNameAndTypesOverview(index) {
   const overviewName = document.getElementById(`overview-name-${index}`);
   const overviewTypes = document.getElementById(`overview-types-${index}`);
 
+  // Überprüfen, ob die benötigten Elemente vorhanden sind
+  if (!overviewName || !overviewTypes) {
+    return;
+  }
+
   const currentPokemon = pokemons[index - 1];
   const pokemonName = currentPokemon.name;
+
+  // Überprüfen, ob das Pokemon-Objekt und der Name vorhanden sind
+  if (!currentPokemon || !pokemonName) {
+    console.error(`Pokemon data or name not found for index ${index}`);
+    return;
+  }
+
   const capitalizedPokemonName =
     pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
 
@@ -324,7 +390,9 @@ function renderNameAndTypesOverview(index) {
   // Setze die Hintergrundfarbe basierend auf dem ersten Type-Wert
   const backgroundColor = getTypeColor(currentPokemon.types[0].type.name);
   const overviewCard = document.getElementById(`overview-card-${index}`);
-  overviewCard.style.backgroundColor = backgroundColor;
+  if (overviewCard) {
+    overviewCard.style.backgroundColor = backgroundColor;
+  }
 }
 
 
@@ -332,9 +400,22 @@ function renderNameAndTypesOverview(index) {
 
 function renderImageOverview(index) {
   const overviewImage = document.getElementById(`overview-image-${index}`);
-  const currentPokemon = pokemons[index - 1]; // Direkter Zugriff auf die Pokemon-Daten
-  overviewImage.src = currentPokemon[`sprites`][`other`][`official-artwork`][`front_default`];
+  const currentPokemon = pokemons[index - 1];
+
+  // Überprüfen, ob das benötigte Element vorhanden ist
+  if (!overviewImage) {
+    return;
+  }
+
+  // Überprüfen, ob das Pokemon-Objekt vorhanden ist und das Bildfeld nicht null ist
+  if (!currentPokemon || !currentPokemon.sprites || !currentPokemon.sprites.other || !currentPokemon.sprites.other['official-artwork'] || !currentPokemon.sprites.other['official-artwork']['front_default']) {
+    console.error(`Pokemon data or image URL not found for index ${index}`);
+    return;
+  }
+
+  overviewImage.src = currentPokemon.sprites.other['official-artwork']['front_default'];
 }
+
 
 
 function underlineClickedHeader(headerId) {
