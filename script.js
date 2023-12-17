@@ -26,6 +26,8 @@ const typeColors = {
 
 
 async function loadPokemon() {
+  showLoadingAnimation(); // Zeige die Ladeanimation an
+
   for (let index = 1; index <= 40; index++) {
     let url = `https://pokeapi.co/api/v2/pokemon/${index}`;
     let response = await fetch(url);
@@ -48,8 +50,38 @@ async function loadPokemon() {
     }
   }
 
+  // Verzögere das Ausblenden der Ladeanimation um 4 Sekunden
+  setTimeout(function () {
+    hideLoadingAnimation();
+  }, 1500);
 }
 
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Zeige die Ladeanimation an
+  showLoadingAnimation();
+});
+
+function showLoadingAnimation() {
+    const loadingOverlay = document.getElementById("loading-overlay");
+    const loadingSpinner = document.getElementById("loading-spinner");
+    const loadingText = document.getElementById("loading-text");
+
+    loadingOverlay.style.display = "flex"; // oder "block", je nachdem, wie Sie es bevorzugen
+
+    // Zeige den Text "Loading Pokédex..."
+    loadingText.textContent = "Loading Pokédex...";
+
+    // Starte die Ladeanimation für 3 Sekunden
+    setTimeout(function () {
+        hideLoadingAnimation();
+    }, 1500);
+}
+
+function hideLoadingAnimation() {
+  const loadingOverlay = document.getElementById("loading-overlay");
+  loadingOverlay.style.display = "none";
+}
 
 
 
