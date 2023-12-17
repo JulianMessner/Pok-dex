@@ -160,7 +160,7 @@ function createPokemonInfoSection(index, currentPokemon) {
         </div>
       </div>
       <div class="pokemon-info-right">
-        <button class="close-button" onclick="closePokedex(${index})">X</button>
+        <button class="close-button" onclick="closePokedex(${index})"><img src="./img/close-button.png" id="close-image"></button>
         <div id="pokedex-number-${index}" class="pokedex-number"><b>#${String(index).padStart(3, '0')}</b></div>
       </div>
     </div>
@@ -295,8 +295,8 @@ function showPokedex(index) {
       </div>
     </div>
     <div class="overlay-arrows">
-      <button class="arrow left-arrow" onclick="showPreviousPokedex()"><</button>
-      <button class="arrow right-arrow" onclick="showNextPokedex()">></button>
+      <button class="arrow left-arrow" onclick="showPreviousPokedex()"><img src="./img/left.png" id="left-arrow-image"></button>
+      <button class="arrow right-arrow" onclick="showNextPokedex()"><img src="./img/right.png" id="right-arrow-image"></button>
     </div>
   `;
 

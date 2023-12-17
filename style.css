@@ -63,6 +63,14 @@ body {
     cursor: auto;
 }
 
+#close-image{
+    height: 45px;
+}
+
+#left-arrow-image,
+#right-arrow-image {
+    height: 60px;
+}
 
 .pokemon-info {
     height: 50%;
