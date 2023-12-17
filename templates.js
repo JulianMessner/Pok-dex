@@ -14,6 +14,7 @@ function createPokemonOverviewCardTemplate(index) {
     `;
 }
 
+
 function createPokemonInfoSectionTemplate(index, currentPokemon) {
   const capitalizedPokemonName =
     currentPokemon["name"].charAt(0).toUpperCase() +
@@ -30,9 +31,7 @@ function createPokemonInfoSectionTemplate(index, currentPokemon) {
         </div>
         <div class="pokemon-info-right">
           <button class="close-button" onclick="closePokedex(${index})"><img src="./img/close-button.png" id="close-image"></button>
-          <div id="pokedex-number-${index}" class="pokedex-number"><b>#${String(
-    index
-  ).padStart(3, "0")}</b></div>
+          <div id="pokedex-number-${index}" class="pokedex-number"><b>#${String(index).padStart(3, "0")}</b></div>
         </div>
       </div>
     `;
@@ -54,14 +53,13 @@ function generateTypesHTMLTemplate(types, index) {
   return typesHTML;
 }
 
+
 function createAboutSectionTemplate(index, currentPokemon) {
   return `
       <div class="about-section" id="about-section-${index}">
         <div class="info-container">
           <div class="info-label"><b>Species</b></div>
-          <div class="info-value"><b>${capitalizeFirstLetter(
-            currentPokemon["species"]["name"]
-          )}</b></div>
+          <div class="info-value"><b>${capitalizeFirstLetter(currentPokemon["species"]["name"])}</b></div>
         </div>
         <div class="info-container">
           <div class="info-label"><b>Height</b></div>
@@ -73,13 +71,12 @@ function createAboutSectionTemplate(index, currentPokemon) {
         </div>
         <div class="info-container">
           <div class="info-label"><b>Abilities</b></div>
-          <div class="info-value"><b>${generateAbilitiesHTMLTemplate(
-            currentPokemon["abilities"]
-          )}</b></div>
+          <div class="info-value"><b>${generateAbilitiesHTMLTemplate(currentPokemon["abilities"])}</b></div>
         </div>
       </div>
     `;
 }
+
 
 function createBaseStatsSectionTemplate(index, currentPokemon) {
   let statNames = [
@@ -90,6 +87,7 @@ function createBaseStatsSectionTemplate(index, currentPokemon) {
     "Special Defense",
     "Speed",
   ];
+
   let baseStatsSectionHTML = `<div class="base-stats-section d-none" id="base-stats-section-${index}">`;
 
   for (let i = 0; i < statNames.length; i++) {
@@ -103,6 +101,7 @@ function createBaseStatsSectionTemplate(index, currentPokemon) {
   return baseStatsSectionHTML;
 }
 
+
 function createStatContainerTemplate(statName, baseStat) {
   return `
       <div class="stat-container">
@@ -111,12 +110,14 @@ function createStatContainerTemplate(statName, baseStat) {
       </div>`;
 }
 
+
 function createMovesSectionTemplate(index) {
   return `
       <div class="moves-section pokemon-moves d-none" id="pokemon-moves-${index}">
       </div>
     `;
 }
+
 
 function createPokemonInfoSection(index, currentPokemon) {
   const capitalizedPokemonName =
@@ -134,13 +135,12 @@ function createPokemonInfoSection(index, currentPokemon) {
         </div>
         <div class="pokemon-info-right">
           <button class="close-button" onclick="closePokedex(${index})"><img src="./img/close-button.png" id="close-image"></button>
-          <div id="pokedex-number-${index}" class="pokedex-number"><b>#${String(
-    index
-  ).padStart(3, "0")}</b></div>
+          <div id="pokedex-number-${index}" class="pokedex-number"><b>#${String(index).padStart(3, "0")}</b></div>
         </div>
       </div>
     `;
 }
+
 
 function generateTypesHTML(types, index) {
   let typesHTML = "";
@@ -158,18 +158,18 @@ function generateTypesHTML(types, index) {
   return typesHTML;
 }
 
+
 function capitalizeFirstLetter(j) {
   return j.charAt(0).toUpperCase() + j.slice(1);
 }
+
 
 function createAboutSection(index, currentPokemon) {
   const aboutSectionHTML = `
       <div class="about-section" id="about-section-${index}">
         <div class="info-container">
           <div class="info-label"><b>Species</b></div>
-          <div class="info-value"><b>${capitalizeFirstLetter(
-            currentPokemon["species"]["name"]
-          )}</b></div>
+          <div class="info-value"><b>${capitalizeFirstLetter(currentPokemon["species"]["name"])}</b></div>
         </div>
         <div class="info-container">
           <div class="info-label"><b>Height</b></div>
@@ -181,15 +181,14 @@ function createAboutSection(index, currentPokemon) {
         </div>
         <div class="info-container">
           <div class="info-label"><b>Abilities</b></div>
-          <div class="info-value"><b>${generateAbilitiesHTML(
-            currentPokemon["abilities"]
-          )}</b></div>
+          <div class="info-value"><b>${generateAbilitiesHTML(currentPokemon["abilities"])}</b></div>
         </div>
       </div>
     `;
 
   return aboutSectionHTML;
 }
+
 
 function createStatContainer(statName, baseStat) {
   return `
@@ -198,6 +197,7 @@ function createStatContainer(statName, baseStat) {
         <div class="stat-value"><b>${baseStat}</b></div>
       </div>`;
 }
+
 
 function createBaseStatsSection(index, currentPokemon) {
   let statNames = [
@@ -221,6 +221,7 @@ function createBaseStatsSection(index, currentPokemon) {
   return baseStatsSectionHTML;
 }
 
+
 function renderMovesSection(movesSection, movesHtml) {
   movesSection.innerHTML = `
       <div class="pokemon-moves-container" id="pokemon-moves-container">
@@ -228,6 +229,7 @@ function renderMovesSection(movesSection, movesHtml) {
       </div>
     `;
 }
+
 
 function createPokedexHTML(index, currentPokemon, backgroundColor) {
   const pokedexId = "pokedex-" + index;
@@ -256,15 +258,15 @@ function createPokedexHTML(index, currentPokemon, backgroundColor) {
     `;
 }
 
+
 function createImageOfPokemonDiv(index, currentPokemon) {
   return `
       <div class="image-of-pokemon-div">
-        <img class="pokemon-image" id="pokemon-image-${index}" src="${
-    currentPokemon[`sprites`][`other`][`official-artwork`][`front_default`]
-  }" alt="Pokemon Image">
+        <img class="pokemon-image" id="pokemon-image-${index}" src="${currentPokemon[`sprites`][`other`][`official-artwork`][`front_default`]}" alt="Pokemon Image">
       </div>
     `;
 }
+
 
 function createHeadlineDescription(index) {
   return `
@@ -276,12 +278,14 @@ function createHeadlineDescription(index) {
     `;
 }
 
+
 function createMovesSection(index) {
   return `
       <div class="moves-section pokemon-moves d-none" id="pokemon-moves-${index}">
       </div>
     `;
 }
+
 
 function renderTypesHTML(types, index) {
   let typesHTML = "";

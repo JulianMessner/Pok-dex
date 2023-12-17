@@ -1,7 +1,6 @@
 let pokemons = [];
 let currentIndex = 0;
 const cardsPerLoad = 8;
-
 const typeColors = {
   normal: "linear-gradient(to bottom right, #209aca, #7dc0f6)",
   fire: "linear-gradient(to bottom right, orange, #ffc478)",
@@ -23,6 +22,7 @@ const typeColors = {
   fairy: "linear-gradient(to bottom right, #f295a5, #f7c5d5)",
 };
 
+
 async function loadPokemon() {
   showLoadingAnimation();
   await fetchPokemonData();
@@ -31,6 +31,7 @@ async function loadPokemon() {
     hideLoadingAnimation();
   }, 1500);
 }
+
 
 async function fetchPokemonData() {
   for (let index = 1; index <= 40; index++) {
@@ -44,6 +45,7 @@ async function fetchPokemonData() {
   }
 }
 
+
 async function renderInitialPokemonCards() {
   for (let index = 1; index <= 8; index++) {
     createPokemonOverviewCard(index);
@@ -51,6 +53,7 @@ async function renderInitialPokemonCards() {
     renderMovesOverview(index);
   }
 }
+
 
 function showLoadingAnimation() {
   const loadingOverlay = document.getElementById("loading-overlay");
@@ -61,10 +64,12 @@ function showLoadingAnimation() {
   loadingText.innerHTML = "Loading Pokédex...";
 }
 
+
 function hideLoadingAnimation() {
   const loadingOverlay = document.getElementById("loading-overlay");
   loadingOverlay.style.display = "none";
 }
+
 
 async function loadMorePokemon() {
   const startIndex = currentIndex + 1;
@@ -75,6 +80,7 @@ async function loadMorePokemon() {
   updateCurrentIndex(endIndex);
   checkAndHideLoadMoreButton(renderedCards);
 }
+
 
 async function fetchAndRenderPokemon(startIndex, endIndex) {
   let renderedCards = 0;
@@ -91,6 +97,7 @@ async function fetchAndRenderPokemon(startIndex, endIndex) {
 
   return renderedCards;
 }
+
 
 async function fetchAndRenderSinglePokemon(index, startIndex) {
   let url = `https://pokeapi.co/api/v2/pokemon/${index + 1}`;
@@ -109,15 +116,18 @@ async function fetchAndRenderSinglePokemon(index, startIndex) {
   }
 }
 
+
 function updateCurrentIndex(endIndex) {
   currentIndex = endIndex - 1;
 }
+
 
 function checkAndHideLoadMoreButton(renderedCards) {
   if (renderedCards + currentIndex >= 40) {
     document.getElementById("load-more-button").style.display = "none";
   }
 }
+
 
 async function renderMovesOverview(index) {
   const movesSection = document.getElementById(`pokemon-moves-${index}`);
@@ -130,6 +140,7 @@ async function renderMovesOverview(index) {
     renderMovesSection(movesSection, movesHtml);
   }
 }
+
 
 async function fetchMoveDataArray(moves) {
   const moveDataArray = [];
@@ -153,6 +164,7 @@ async function fetchMoveDataArray(moves) {
   return moveDataArray;
 }
 
+
 function generateMovesHtml(moveDataArray) {
   let movesHtml = "";
 
@@ -163,6 +175,7 @@ function generateMovesHtml(moveDataArray) {
 
   return movesHtml;
 }
+
 
 function showPokedex(index) {
   const overlayId = "overlay";
@@ -181,6 +194,7 @@ function showPokedex(index) {
   renderMovesOverview(index);
 }
 
+
 function generateAbilitiesHTML(abilities) {
   let abilitiesHTML = "";
 
@@ -196,21 +210,25 @@ function generateAbilitiesHTML(abilities) {
   return abilitiesHTML;
 }
 
+
 function closePokedex(index) {
   document.getElementById("overlay").style.display = "none";
   document.getElementById("pokedex-" + index).style.display = "none";
 }
 
+
 function createPokemonOverviewCard(index) {
   document.getElementById("content").innerHTML +=
-    createPokemonOverviewCardTemplate(index);
+  createPokemonOverviewCardTemplate(index);
   setCardBackgroundColor(index);
 }
+
 
 function renderPokemonInfoOverview(index) {
   renderNameAndTypesOverview(index);
   renderImageOverview(index);
 }
+
 
 function renderName(index) {
   const overviewName = document.getElementById(`overview-name-${index}`);
@@ -222,12 +240,14 @@ function renderName(index) {
   overviewName.innerHTML = capitalizedPokemonName;
 }
 
+
 function renderTypes(index) {
   const overviewTypes = document.getElementById(`overview-types-${index}`);
   const currentPokemon = pokemons[index - 1];
 
   overviewTypes.innerHTML = renderTypesHTML(currentPokemon.types, index);
 }
+
 
 function setBackgroundColor(index) {
   const currentPokemon = pokemons[index - 1];
@@ -239,11 +259,13 @@ function setBackgroundColor(index) {
   }
 }
 
+
 function renderNameAndTypesOverview(index) {
   renderName(index);
   renderTypes(index);
   setBackgroundColor(index);
 }
+
 
 function renderImageOverview(index) {
   const overviewImage = document.getElementById(`overview-image-${index}`);
@@ -252,6 +274,7 @@ function renderImageOverview(index) {
   overviewImage.src =
     currentPokemon.sprites.other["official-artwork"]["front_default"];
 }
+
 
 function underlineClickedHeader(headerId) {
   const allHeaders = document.querySelectorAll("h2");
@@ -264,13 +287,12 @@ function underlineClickedHeader(headerId) {
   clickedHeader.classList.add("h2-decoration");
 }
 
+
 function toggleSection(sectionId, index, headerId) {
   const section = document.getElementById(sectionId);
 
   if (section) {
-    const allSections = document.querySelectorAll(
-      ".about-section, .base-stats-section, .pokemon-moves"
-    );
+    const allSections = document.querySelectorAll( ".about-section, .base-stats-section, .pokemon-moves");
 
     for (let i = 0; i < allSections.length; i++) {
       const s = allSections[i];
@@ -285,31 +307,38 @@ function toggleSection(sectionId, index, headerId) {
   }
 }
 
+
 function showAboutSection(index) {
   toggleSection(`about-section-${index}`, index, `about-${index}`);
 }
+
 
 function showBaseStatsSection(index) {
   toggleSection(`base-stats-section-${index}`, index, `base-stats-${index}`);
 }
 
+
 function showMovesSection(index) {
   toggleSection(`pokemon-moves-${index}`, index, `moves-${index}`);
 }
+
 
 function showPreviousPokedex() {
   currentIndex = (currentIndex - 1 + pokemons.length) % pokemons.length;
   showPokedex(currentIndex + 1);
 }
 
+
 function showNextPokedex() {
   currentIndex = (currentIndex + 1) % pokemons.length;
   showPokedex(currentIndex + 1);
 }
 
+
 function getTypeColor(type) {
   return typeColors[type] || typeColors.default;
 }
+
 
 function setCardBackgroundColor(index) {
   const currentPokemon = pokemons[index - 1];
@@ -317,8 +346,8 @@ function setCardBackgroundColor(index) {
 
   if (currentPokemon.types.length > 0) {
     const type = currentPokemon.types[0].type.name;
-
     const backgroundColor = getTypeColor(type);
+
     overviewCard.style.background = backgroundColor;
   }
 }
