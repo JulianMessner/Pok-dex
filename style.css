@@ -14,6 +14,7 @@ body {
     min-height: 100vh;
     background: linear-gradient(to bottom right, #4fc3f7, #81d4fa, #b3e0f5, #e1f5fe);
     flex-wrap: wrap;
+    overflow-x: hidden;
 }
 
 .navbar {
@@ -395,16 +396,16 @@ footer {
     color: white;
 }
 
-#icons-credit{
+#icons-credit {
     color: white;
 }
 
-footer a{
+footer a {
     text-decoration: none;
     color: white;
 }
 
-footer a:hover{
+footer a:hover {
     text-decoration: underline;
 }
 
@@ -456,10 +457,10 @@ footer a:hover{
 
 }
 
-@media (max-width: 600px){
-    h2{
+@media (max-width: 600px) {
+    h2 {
         padding-top: 10px;
-    padding-bottom: 10px;
+        padding-bottom: 10px;
     }
 
     .overlay-arrows {
@@ -475,17 +476,47 @@ footer a:hover{
 
 }
 
-@media (max-width: 470px){
-    .pokedex{
+@media (max-width: 470px) {
+    .pokedex {
         width: 90%;
     }
 
-    .pokemon-image{
+    .pokemon-image {
         height: 250px;
         top: 15%;
     }
 
-    .stat-name{
+
+
+    .stat-name {
         width: 200px;
+    }
+
+    .overview-card {
+        margin: 10px;
+    }
+
+    h2 {
+        font-size: 22px;
+
+    }
+}
+
+@media (max-width: 370px) {
+    h2 {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .pokemon-details {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .about-section,
+    .base-stats-section,
+    .moves-section {
+        padding-left: 20px;
+        padding-right: 20px;
     }
 }
