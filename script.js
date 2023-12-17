@@ -224,9 +224,6 @@ function generateTypesHTML(types, index) {
   return typesHTML;
 }
 
-
-
-
 function createAboutSection(index, currentPokemon) {
   return `
     <div class="about-section" id="about-section-${index}">
