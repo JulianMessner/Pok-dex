@@ -327,8 +327,8 @@ function showPokedex(index) {
       </div>
     </div>
     <div class="overlay-arrows">
-      <button class="arrow left-arrow" onclick="showPreviousPokedex()"><img src="./img/left.png" id="left-arrow-image"></button>
-      <button class="arrow right-arrow" onclick="showNextPokedex()"><img src="./img/right.png" id="right-arrow-image"></button>
+      <img src="./img/left.png" id="left-arrow-image" class="arrow left-arrow" onclick="showPreviousPokedex()">
+      <img src="./img/right.png" id="right-arrow-image" class="arrow right-arrow" onclick="showNextPokedex()">
     </div>
   `;
 
