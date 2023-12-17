@@ -74,8 +74,7 @@ function hideLoadingAnimation() {
 async function loadMorePokemon() {
   const startIndex = currentIndex + 1;
   const endIndex = Math.min(startIndex + cardsPerLoad, 41);
-
-  let renderedCards = await fetchAndRenderPokemon(startIndex, endIndex);
+  const renderedCards = await fetchAndRenderPokemon(startIndex, endIndex);
 
   updateCurrentIndex(endIndex);
   checkAndHideLoadMoreButton(renderedCards);
@@ -86,12 +85,7 @@ async function fetchAndRenderPokemon(startIndex, endIndex) {
   let renderedCards = 0;
 
   for (let index = startIndex; index < endIndex; index++) {
-    if (index >= pokemons.length) {
-      break;
-    }
-
     await fetchAndRenderSinglePokemon(index, startIndex);
-
     renderedCards++;
   }
 
@@ -178,8 +172,7 @@ function generateMovesHtml(moveDataArray) {
 
 
 function showPokedex(index) {
-  const overlayId = "overlay";
-  const overlay = document.getElementById(overlayId);
+  const overlay = document.getElementById('overlay');
   overlay.innerHTML = "";
 
   const currentPokemon = pokemons[index - 1];
@@ -191,6 +184,7 @@ function showPokedex(index) {
   currentIndex = index - 1;
 
   overlay.style.display = "block";
+
   renderMovesOverview(index);
 }
 
@@ -254,9 +248,7 @@ function setBackgroundColor(index) {
   const backgroundColor = getTypeColor(currentPokemon.types[0].type.name);
   const overviewCard = document.getElementById(`overview-card-${index}`);
 
-  if (overviewCard) {
-    overviewCard.style.backgroundColor = backgroundColor;
-  }
+  overviewCard.style.backgroundColor = backgroundColor;
 }
 
 
@@ -271,8 +263,7 @@ function renderImageOverview(index) {
   const overviewImage = document.getElementById(`overview-image-${index}`);
   const currentPokemon = pokemons[index - 1];
 
-  overviewImage.src =
-    currentPokemon.sprites.other["official-artwork"]["front_default"];
+  overviewImage.src = currentPokemon.sprites.other["official-artwork"]["front_default"];
 }
 
 
@@ -290,21 +281,18 @@ function underlineClickedHeader(headerId) {
 
 function toggleSection(sectionId, index, headerId) {
   const section = document.getElementById(sectionId);
+  const allSections = document.querySelectorAll( ".about-section, .base-stats-section, .pokemon-moves");
 
-  if (section) {
-    const allSections = document.querySelectorAll( ".about-section, .base-stats-section, .pokemon-moves");
-
-    for (let i = 0; i < allSections.length; i++) {
+  for (let i = 0; i < allSections.length; i++) {
       const s = allSections[i];
       s.classList.remove("active");
       s.classList.add("d-none");
-    }
-
-    section.classList.remove("d-none");
-    section.classList.add("active");
-
-    underlineClickedHeader(headerId);
   }
+
+  section.classList.remove("d-none");
+  section.classList.add("active");
+
+  underlineClickedHeader(headerId);
 }
 
 

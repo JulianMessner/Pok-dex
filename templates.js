@@ -16,9 +16,7 @@ function createPokemonOverviewCardTemplate(index) {
 
 
 function createPokemonInfoSectionTemplate(index, currentPokemon) {
-  const capitalizedPokemonName =
-    currentPokemon["name"].charAt(0).toUpperCase() +
-    currentPokemon["name"].slice(1);
+  const capitalizedPokemonName = currentPokemon["name"].charAt(0).toUpperCase() + currentPokemon["name"].slice(1);
   const typesHTML = generateTypesHTMLTemplate(currentPokemon["types"], index);
 
   return `
@@ -120,9 +118,7 @@ function createMovesSectionTemplate(index) {
 
 
 function createPokemonInfoSection(index, currentPokemon) {
-  const capitalizedPokemonName =
-    currentPokemon["name"].charAt(0).toUpperCase() +
-    currentPokemon["name"].slice(1);
+  const capitalizedPokemonName = currentPokemon["name"].charAt(0).toUpperCase() + currentPokemon["name"].slice(1);
   const typesHTML = generateTypesHTML(currentPokemon["types"], index);
 
   return `
