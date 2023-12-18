@@ -332,6 +332,7 @@ function setCardBackgroundColor(index) {
   }
 }
 
+
 function searchPokemon() {
   const searchInput = document.getElementById('searchInput');
   const pokemonName = searchInput.value.trim().toLowerCase();
@@ -342,9 +343,7 @@ function searchPokemon() {
     clearSearchError();
   } else {
     displaySearchError();
-    clearSearchError();
   }
-
   searchInput.value = '';
 }
 
@@ -359,4 +358,13 @@ function displaySearchError() {
 function clearSearchError() {
   const searchInput = document.getElementById('searchInput');
   searchInput.setCustomValidity('');
+  searchInput.validity = { valueMissing: false };
+}
+
+
+function updateSearchButton() {
+  const searchInput = document.getElementById('searchInput');
+  const searchButton = document.getElementById('searchButton');
+  searchButton.disabled = searchInput.value.length === 0;
+  clearSearchError();
 }

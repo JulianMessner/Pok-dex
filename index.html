@@ -18,15 +18,13 @@
   </div>
   <nav class="navbar">
     <div class="container-fluid">
-        <a class="navbar-brand" href="."><b>Pokedex</b></a>
-        <form class="d-flex" onsubmit="searchPokemon(); return false;">
-          <input class="form-control me-2" type="search" placeholder="Search Pokémon" aria-label="Search" id="searchInput" required>
-          <button class="btn btn-outline-success" type="submit">Search</button>
+      <a class="navbar-brand" href="."><b>Pokedex</b></a>
+      <form class="d-flex" onsubmit="searchPokemon(); return false;">
+        <input class="form-control me-2" type="search" placeholder="Search Pokémon" aria-label="Search" id="searchInput" oninput="updateSearchButton()">
+        <button class="btn btn-outline-success" type="submit" id="searchButton" disabled>Search</button>
       </form>
-      
     </div>
-</nav>
-
+  </nav>
   <div id="overlay" class="overlay"></div>
   <div id="content"></div>
   <button type="button" class="btn btn-primary" id="load-more-button" onclick="loadMorePokemon()"><b>Load
