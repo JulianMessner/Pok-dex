@@ -52,7 +52,7 @@ body {
     transform: translate(-50%, -50%);
     background-color: white;
     border-radius: 10px;
-    height: 90vh;
+    height: 600px;
     width: 430px;
     min-height: 90vh;
     background: rgb(0, 128, 96);
@@ -350,6 +350,7 @@ h2 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    flex: 1;
     padding-top: 100px;
 }
 

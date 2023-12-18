@@ -27,9 +27,8 @@ async function loadPokemon() {
   showLoadingAnimation();
   await fetchPokemonData();
   await renderInitialPokemonCards();
-  setTimeout(function () {
-    hideLoadingAnimation();
-  }, 1500);
+  hideLoadingAnimation();
+  await preloadMoves();
 }
 
 
@@ -42,6 +41,13 @@ async function fetchPokemonData() {
       let pokemonData = await response.json();
       pokemons.push(pokemonData);
     }
+  }
+}
+
+
+async function preloadMoves() {
+  for (let i = 0; i < pokemons.length; i++) {
+    await fetchMoveDataArray(pokemons[i].moves);
   }
 }
 
@@ -145,7 +151,6 @@ async function fetchMoveDataArray(moves) {
 
     try {
       const response = await fetch(moveUrl);
-
       if (response.ok) {
         const moveData = await response.json();
         moveDataArray.push(moveData);
@@ -180,9 +185,7 @@ function showPokedex(index) {
   const pokedexHTML = createPokedexHTML(index, currentPokemon, backgroundColor);
 
   overlay.innerHTML = pokedexHTML;
-
   currentIndex = index - 1;
-
   overlay.style.display = "block";
 
   renderMovesOverview(index);
@@ -228,8 +231,7 @@ function renderName(index) {
   const overviewName = document.getElementById(`overview-name-${index}`);
   const currentPokemon = pokemons[index - 1];
   const pokemonName = currentPokemon.name;
-  const capitalizedPokemonName =
-    pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
+  const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
 
   overviewName.innerHTML = capitalizedPokemonName;
 }
