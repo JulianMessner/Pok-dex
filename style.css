@@ -54,7 +54,6 @@ body {
     border-radius: 10px;
     height: 600px;
     width: 430px;
-    min-height: 90vh;
     background: rgb(0, 128, 96);
     color: white;
     border-radius: 10px;
@@ -321,9 +320,12 @@ h2 {
 .overlay-arrows {
     position: fixed;
     top: 50%;
-    width: 100%;
+    left: 50%;
+    width: 600px;
+    transform: translate(-50%, -50%);
     display: flex;
     justify-content: space-between;
+    align-items: center;
     z-index: -2;
 }
 
@@ -337,13 +339,16 @@ h2 {
 }
 
 .left-arrow {
-    margin-left: 15%;
     font-size: 50px;
 }
 
 .right-arrow {
-    margin-right: 15%;
     font-size: 50px;
+}
+
+#left-arrow-image,
+#right-arrow-image {
+    height: 60px;
 }
 
 #content {
@@ -352,6 +357,7 @@ h2 {
     justify-content: center;
     flex: 1;
     padding-top: 100px;
+    max-width: 1440px;
 }
 
 .btn-primary {

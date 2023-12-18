@@ -33,7 +33,7 @@ async function loadPokemon() {
 
 
 async function fetchPokemonData() {
-  for (let index = 1; index <= 40; index++) {
+  for (let index = 1; index <= 151; index++) {
     let url = `https://pokeapi.co/api/v2/pokemon/${index}`;
     let response = await fetch(url);
 
@@ -79,7 +79,7 @@ function hideLoadingAnimation() {
 
 async function loadMorePokemon() {
   const startIndex = currentIndex + 1;
-  const endIndex = Math.min(startIndex + cardsPerLoad, 41);
+  const endIndex = startIndex + cardsPerLoad;
   const renderedCards = await fetchAndRenderPokemon(startIndex, endIndex);
 
   updateCurrentIndex(endIndex);
@@ -120,7 +120,7 @@ function updateCurrentIndex(endIndex) {
 
 
 function checkAndHideLoadMoreButton(renderedCards) {
-  if (renderedCards + currentIndex >= 40) {
+  if (renderedCards === 0) {
     document.getElementById("load-more-button").style.display = "none";
   }
 }
