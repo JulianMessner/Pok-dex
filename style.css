@@ -15,6 +15,7 @@ body {
     background: linear-gradient(to bottom right, #4fc3f7, #81d4fa, #b3e0f5, #e1f5fe);
     flex-wrap: wrap;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .navbar {
@@ -451,4 +452,27 @@ input:invalid::after {
     100% {
         transform: rotate(360deg);
     }
+}
+
+::-webkit-scrollbar {
+    background-color: #b3e0f5;
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #b3e0f5;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(71, 152, 224, 0.8);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(108, 183, 249, 0.8);
+}
+
+::-webkit-scrollbar-button {
+    display: none;
 }
