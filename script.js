@@ -94,7 +94,6 @@ async function fetchAndRenderPokemon(startIndex, endIndex) {
     await fetchAndRenderSinglePokemon(index, startIndex);
     renderedCards++;
   }
-
   return renderedCards;
 }
 
@@ -106,9 +105,7 @@ async function fetchAndRenderSinglePokemon(index, startIndex) {
   if (response.ok) {
     let pokemonData = await response.json();
     pokemons[index] = pokemonData;
-
     createPokemonOverviewCard(index + (startIndex === 1 ? 8 : 8));
-
     if (index >= startIndex) {
       await renderPokemonInfoOverview(index + (startIndex === 1 ? 8 : 8));
       await renderMovesOverview(index + 1);
@@ -136,7 +133,6 @@ async function renderMovesOverview(index) {
   if (movesSection) {
     const moveDataArray = await fetchMoveDataArray(currentPokemon.moves);
     const movesHtml = generateMovesHtml(moveDataArray);
-
     renderMovesSection(movesSection, movesHtml);
   }
 }
@@ -159,7 +155,6 @@ async function fetchMoveDataArray(moves) {
       console.error(`Error fetching move data for URL: ${moveUrl}`, error);
     }
   }
-
   return moveDataArray;
 }
 
@@ -171,7 +166,6 @@ function generateMovesHtml(moveDataArray) {
     const moveData = moveDataArray[i];
     movesHtml += `<p><b>${moveData.name}</b></p>`;
   }
-
   return movesHtml;
 }
 
@@ -187,7 +181,6 @@ function showPokedex(index) {
   overlay.innerHTML = pokedexHTML;
   currentIndex = index - 1;
   overlay.style.display = "block";
-
   renderMovesOverview(index);
 }
 
@@ -203,7 +196,6 @@ function generateAbilitiesHTML(abilities) {
       abilitiesHTML += ", ";
     }
   }
-
   return abilitiesHTML;
 }
 
@@ -290,10 +282,8 @@ function toggleSection(sectionId, index, headerId) {
       s.classList.remove("active");
       s.classList.add("d-none");
   }
-
   section.classList.remove("d-none");
   section.classList.add("active");
-
   underlineClickedHeader(headerId);
 }
 
@@ -340,4 +330,33 @@ function setCardBackgroundColor(index) {
 
     overviewCard.style.background = backgroundColor;
   }
+}
+
+function searchPokemon() {
+  const searchInput = document.getElementById('searchInput');
+  const pokemonName = searchInput.value.trim().toLowerCase();
+  const foundPokemonIndex = pokemons.findIndex(pokemon => pokemon.name.toLowerCase().startsWith(pokemonName));
+
+  if (foundPokemonIndex !== -1) {
+    showPokedex(foundPokemonIndex + 1);
+    clearSearchError();
+  } else {
+    displaySearchError();
+    clearSearchError();
+  }
+
+  searchInput.value = '';
+}
+
+
+function displaySearchError() {
+  const searchInput = document.getElementById('searchInput');
+  searchInput.setCustomValidity('Pokemon not found');
+  searchInput.reportValidity();
+}
+
+
+function clearSearchError() {
+  const searchInput = document.getElementById('searchInput');
+  searchInput.setCustomValidity('');
 }

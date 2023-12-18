@@ -14,6 +14,20 @@
         padding-bottom: 10px;
     }
 
+    nav{
+        height: 150px !important;
+    }
+
+    .container-fluid{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #content{
+        padding-top: 150px;
+    }
+
     .overlay-arrows {
         top: 45%;
         z-index: 5;
@@ -28,6 +42,10 @@
 @media (max-width: 470px) {
     .pokedex {
         width: 90%;
+    }
+
+    #content{
+        padding-top: 120px;
     }
 
     .pokemon-image {
@@ -45,6 +63,21 @@
 
     h2 {
         font-size: 22px;
+    }
+    nav{
+        height: 120px !important;
+    }
+
+    .navbar-brand {
+        font-size: 32px !important;
+    }
+
+    form{
+        height: 30px !important;
+    }
+
+    .btn-outline-success {
+        line-height: 0 !important;
     }
 }
 

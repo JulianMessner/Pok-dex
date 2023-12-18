@@ -360,6 +360,16 @@ h2 {
     background: linear-gradient(to bottom right, rgb(22 107 212 / 80%), rgb(55 146 237 / 80%), rgb(114 188 255 / 80%), rgb(45 151 236 / 80%)) !important;
 }
 
+.btn-outline-success{
+    color: white !important;
+    font-weight: bold !important;
+    border: 1px solid white !important;
+}
+
+.btn-outline-success:hover{
+    background-color: rgba(211, 211, 211, 0.244) !important;
+}
+
 footer {
     background: linear-gradient(to bottom right, rgba(21, 101, 192, 0.8), rgba(115, 168, 220, 0.8), rgba(71, 152, 224, 0.8), rgba(166, 215, 254, 0.8)) !important;
     height: 50px;
@@ -414,6 +424,17 @@ footer a:hover {
     height: 50px;
     animation: spin 1s linear infinite;
     margin-bottom: 20px;
+}
+
+input:invalid {
+    border: 2px solid rgb(255, 145, 0);
+}
+
+input:invalid::after {
+    content: attr(title);
+    display: block;
+    color: rgb(255, 145, 0);
+    font-size: 0.8em;
 }
 
 @keyframes spin {
