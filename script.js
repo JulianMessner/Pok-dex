@@ -27,22 +27,30 @@ async function loadPokemon() {
   showLoadingAnimation();
   await fetchPokemonData();
   await renderInitialPokemonCards();
-  hideLoadingAnimation();
+  setTimeout(hideLoadingAnimation, 2000);
   await preloadMoves();
 }
 
 
+
 async function fetchPokemonData() {
+  const requests = [];
+  
   for (let index = 1; index <= 151; index++) {
     let url = `https://pokeapi.co/api/v2/pokemon/${index}`;
-    let response = await fetch(url);
+    requests.push(fetch(url));
+  }
 
+  const responses = await Promise.all(requests);
+
+  for (const response of responses) {
     if (response.ok) {
       let pokemonData = await response.json();
       pokemons.push(pokemonData);
     }
   }
 }
+
 
 
 async function preloadMoves() {
